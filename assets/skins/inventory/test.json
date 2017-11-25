@@ -1,0 +1,8 @@
+{
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: { down: emptySlot, up: emptySlot },
+	toggle: { down: emptySlot, checked: emptySlot, up: emptySlot }
+},
+}
+
+
