@@ -8,7 +8,6 @@ public class DesktopLauncher {
 	
 	public static void main (String[] arg) {
 		startUp();
-		
 	}
 	
 	public static void startUp(){

@@ -38,16 +38,17 @@ public class TheLostWoods extends ApplicationAdapter {
 	protected Stage stage;
 	
 	public static Content res;
+	/*
 	public static BitmapFont font;
-	
+	*/
 	@SuppressWarnings("static-access")
 	@Override
 	public void create () {
 		
-		
+		/*
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
-		
+		*/
 		res = new Content();
 		res.loadTexture("Sprites/PlayerSprite.png", "player");
 		
@@ -119,11 +120,11 @@ public class TheLostWoods extends ApplicationAdapter {
 			gsm.render();
 			
 			sb.setProjectionMatrix(hudCam.combined);
-			
+			/*
 			sb.begin();
 			font.draw(sb, ""+Gdx.graphics.getFramesPerSecond(), 10, 20);
 			sb.end();
-			
+			*/
 			stage.act();
 	        stage.draw();
 		}
