@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JTree;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -14,6 +15,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
+import com.mygame.game.handlers.TreeStructure;
 import com.mygame.game.main.TheLostWoods;
 
 public class Pathway {
@@ -22,7 +24,7 @@ public class Pathway {
 	private float angle;
 	
 	private ArrayList<PathSegment> open;
-	private ArrayList<PathSegment> closed;
+	private TreeStructure closed;
 	
 	private int pathSizeMin = 100;
 	private int pathSizeMax = 1000;
@@ -44,7 +46,7 @@ public class Pathway {
 		splitThreshold = 0.9;
 		maxCount = 100;
 		open = new ArrayList<PathSegment>();
-		closed = new ArrayList<PathSegment>();
+		closed = new TreeStructure();
 		timeElapsed = 0;
 		this.cam = cam;
 		
@@ -57,7 +59,7 @@ public class Pathway {
 		splitThreshold = 0.9;
 		maxCount = 100;
 		open = new ArrayList<PathSegment>();
-		closed = new ArrayList<PathSegment>();
+		closed = new TreeStructure();
 		timeElapsed = 0;
 		this.cam = cam;
 		
