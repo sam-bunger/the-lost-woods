@@ -1,6 +1,5 @@
 package com.mygame.game.rng;
 
-import java.awt.Point;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 
