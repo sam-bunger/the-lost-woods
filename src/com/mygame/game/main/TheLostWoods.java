@@ -78,7 +78,7 @@ public class TheLostWoods extends ApplicationAdapter {
 
 		//Forest
 		res.loadTexture("Forest/grass.png", "grass");
-		res.loadTexture("Forest/pathSegment.png", "pathSegment");
+		res.loadTexture("Forest/path_1.png", "path_1");
 		
 		sr = new ShapeRenderer();
 		sb = new SpriteBatch();

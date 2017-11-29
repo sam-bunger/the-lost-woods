@@ -16,12 +16,15 @@ public class TreeNode {
 		this.parent = parent;
 		children = new ArrayList<TreeNode>();
 		sibilings = new ArrayList<TreeNode>();
-		if(parent == null) return;
+	}
+	
+	public void setSibilings(){
+		if(parent == null) return;	
 		for(int i = 0; i < parent.getChildren().size(); i++){
 			if(!parent.getChildren().get(i).getPath().equals(path)){
 				sibilings.add(parent.getChildren().get(i));
 			}
-		}	
+		}
 	}
 	
 	public void addChild(TreeNode a){

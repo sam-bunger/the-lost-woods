@@ -1,5 +1,7 @@
 package com.mygame.game.rng;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +16,8 @@ public class Pathway {
 	private Vector2 start;
 	private float angle;
 	
+	private final int numImages = 1;
+	
 	private int pathSizeMin = 500;
 	private int pathSizeMax = 1000;
 	
@@ -21,7 +25,7 @@ public class Pathway {
 	
 	private OrthographicCamera cam;
 	
-	private TextureRegion reg = new TextureRegion(TheLostWoods.res.getTexture("pathSegment"));
+	private TextureRegion path_1 = new TextureRegion(TheLostWoods.res.getTexture("path_1"));
 	
 	public Pathway(OrthographicCamera cam){
 		this.start = new Vector2(0, 0);
@@ -52,6 +56,7 @@ public class Pathway {
 				float angle = getOneAngle(current.getAngle());
 				playerOnPath.addChild(new TreeNode(new PathSegment(current.getEnd(), randomLength(), angle, current), playerOnPath));
 			}
+			playerOnPath.setSibilings();
 		}
 		
 		Vector2 position = new Vector2(cam.position.x, cam.position.y);
@@ -125,16 +130,30 @@ public class Pathway {
     	
     }
     
-    public void drawAlongPath(SpriteBatch sb, PathSegment path){
+    public void drawAlongPath(SpriteBatch sb, PathSegment path, int[] rand, int i){
     	
-    	if(path.getLength() - 30 < 0) return;
+    	if(i == 100){
+    		i = 0;
+    	}
     	
+    	if(path.getLength() - rand[i] < 0) return;
+
     	sb.begin();
-    	sb.draw(reg, path.getEnd().x, path.getEnd().y, 50f, 15f, 100f, 30f, 1f, 1f, (float)Math.toDegrees(path.getAngle()) - 90f);
+    	sb.draw(selectImage(), path.getEnd().x - (rand[i]), path.getEnd().y + (rand[99 - i]), 50f, 15f, 32f, 32f, 1f, 1f, (float)Math.toDegrees(path.getAngle()) - 90f);
     	sb.end();
     	
-    	drawAlongPath(sb, new PathSegment(path.getStart(), path.getLength() - 30, path.getAngle(), path));
+    	drawAlongPath(sb, new PathSegment(path.getStart(), path.getLength() - rand[i], path.getAngle(), path), rand, i+1);
     	
+    }
+    
+    private TextureRegion selectImage(){
+    	int randomImage = (int)Math.random()*numImages;
+    	
+    	switch(randomImage){
+    		case 1: return path_1;
+    	}
+    	
+    	return path_1;
     }
 	
 	public void render(SpriteBatch sb, ShapeRenderer sr){
@@ -144,21 +163,21 @@ public class Pathway {
 		
 		drawGrass(sb);
 		
-		drawAlongPath(sb, playerOnPath.getPath());
+		drawAlongPath(sb, playerOnPath.getPath(), playerOnPath.getPath().getRandom(), 0);
 		
 		for(int i = 0; i < playerOnPath.getChildren().size(); i++){
-			drawAlongPath(sb, playerOnPath.getChildren().get(i).getPath());
+			drawAlongPath(sb, playerOnPath.getChildren().get(i).getPath(), playerOnPath.getChildren().get(i).getPath().getRandom(), 0);
 		}
 		
 		for(int i = 0; i < playerOnPath.getSibilings().size(); i++){
-			drawAlongPath(sb, playerOnPath.getSibilings().get(i).getPath());
+			drawAlongPath(sb, playerOnPath.getSibilings().get(i).getPath(), playerOnPath.getSibilings().get(i).getPath().getRandom(), 0);
 		}
 		
 		if(playerOnPath.getParent() != null){
-			drawAlongPath(sb, playerOnPath.getParent().getPath());
+			drawAlongPath(sb, playerOnPath.getParent().getPath(), playerOnPath.getParent().getPath().getRandom(), 0);
 			
 			for(int i = 0; i < playerOnPath.getParent().getSibilings().size(); i++){
-				drawAlongPath(sb, playerOnPath.getParent().getSibilings().get(i).getPath());
+				drawAlongPath(sb, playerOnPath.getParent().getSibilings().get(i).getPath(), playerOnPath.getParent().getSibilings().get(i).getPath().getRandom(), 0);
 			}
 			
 		}
