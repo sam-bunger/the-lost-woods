@@ -1,13 +1,11 @@
 package com.mygame.game.rng;
 
-import java.util.Random;
-
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.mygame.game.handlers.TreeNode;
 import com.mygame.game.main.TheLostWoods;
 
@@ -16,7 +14,7 @@ public class Pathway {
 	private Vector2 start;
 	private float angle;
 	
-	private final int numImages = 1;
+	private final int numImages = 2;
 	
 	private int pathSizeMin = 500;
 	private int pathSizeMax = 1000;
@@ -26,6 +24,7 @@ public class Pathway {
 	private OrthographicCamera cam;
 	
 	private TextureRegion path_1 = new TextureRegion(TheLostWoods.res.getTexture("path_1"));
+	private TextureRegion path_2 = new TextureRegion(TheLostWoods.res.getTexture("path_2"));
 	
 	public Pathway(OrthographicCamera cam){
 		this.start = new Vector2(0, 0);
@@ -110,8 +109,50 @@ public class Pathway {
 	}
 	
 	public void update(float delta){
+		
 		generate();
+		
+		if(playerOnPath.getPath().getPathData().size() == 0){
+			System.out.println("currentPathGenerated");
+			drawAlongPath(playerOnPath.getPath());
+		}
+		
+		for(int i = 0; i < playerOnPath.getChildren().size(); i++){
+			if(playerOnPath.getChildren().get(i).getPath().getPathData().size() == 0){
+				System.out.println("childrenPathGenerated");
+				drawAlongPath(playerOnPath.getChildren().get(i).getPath());
+			}
+		}
+		
+		
 	}
+    
+    public void drawAlongPath(PathSegment path){
+    	
+    	int rand1 = (int) (Math.random()*10) + 60;
+    	
+    	if(path.getLength() - rand1 < 0) return;
+    	
+    	int rand2 = (int) (Math.random()*20) + 10;
+    	int rand3 = (int) (Math.random()*20) + 10;
+    	int randImage = (int) (Math.random()*numImages);
+
+    	path.getPathData().add(new Vector3(path.getEnd().x - rand2, path.getEnd().y - rand3, randImage));
+    	path.setLength(path.getLength() - rand1);
+    	
+    	drawAlongPath(path);
+    	
+    }
+
+    private TextureRegion selectImage(int randomImage){
+    	
+    	switch(randomImage){
+    		case 0: return path_1;
+    		case 1: return path_2;
+    	}
+    	
+    	return path_1;
+    }
     
     public void drawGrass(SpriteBatch sb){
     	
@@ -129,60 +170,41 @@ public class Pathway {
 		}
     	
     }
-    
-    public void drawAlongPath(SpriteBatch sb, PathSegment path, int[] rand, int i){
-    	
-    	if(i == 100){
-    		i = 0;
-    	}
-    	
-    	if(path.getLength() - rand[i] < 0) return;
-
-    	sb.begin();
-    	sb.draw(selectImage(), path.getEnd().x - (rand[i]), path.getEnd().y + (rand[99 - i]), 50f, 15f, 32f, 32f, 1f, 1f, (float)Math.toDegrees(path.getAngle()) - 90f);
-    	sb.end();
-    	
-    	drawAlongPath(sb, new PathSegment(path.getStart(), path.getLength() - rand[i], path.getAngle(), path), rand, i+1);
-    	
-    }
-    
-    private TextureRegion selectImage(){
-    	int randomImage = (int)Math.random()*numImages;
-    	
-    	switch(randomImage){
-    		case 1: return path_1;
-    	}
-    	
-    	return path_1;
-    }
 	
 	public void render(SpriteBatch sb, ShapeRenderer sr){
-		sr.setAutoShapeType(true);
-        sr.setColor(Color.RED);
-		sr.begin();
 		
 		drawGrass(sb);
 		
-		drawAlongPath(sb, playerOnPath.getPath(), playerOnPath.getPath().getRandom(), 0);
+		sb.begin();
 		
-		for(int i = 0; i < playerOnPath.getChildren().size(); i++){
-			drawAlongPath(sb, playerOnPath.getChildren().get(i).getPath(), playerOnPath.getChildren().get(i).getPath().getRandom(), 0);
+		PathSegment path = playerOnPath.getPath();
+		
+		for(int i = 0; i < path.getPathData().size(); i++){
+			sb.draw(selectImage((int)path.getPathData().get(i).z), path.getPathData().get(i).x, path.getPathData().get(i).y, 50f, 15f, 32f, 32f, 1f, 1f, (float)Math.toDegrees(path.getAngle()) - 90f);
 		}
 		
-		for(int i = 0; i < playerOnPath.getSibilings().size(); i++){
-			drawAlongPath(sb, playerOnPath.getSibilings().get(i).getPath(), playerOnPath.getSibilings().get(i).getPath().getRandom(), 0);
+		for(int j = 0; j < playerOnPath.getChildren().size(); j++){
+			path = playerOnPath.getChildren().get(j).getPath();
+			for(int i = 0; i < path.getPathData().size(); i++){
+				sb.draw(selectImage((int)path.getPathData().get(i).z), path.getPathData().get(i).x, path.getPathData().get(i).y, 50f, 15f, 32f, 32f, 1f, 1f, (float)Math.toDegrees(path.getAngle()) - 90f);
+			}
+		}
+		
+		for(int j = 0; j < playerOnPath.getSibilings().size(); j++){
+			path = playerOnPath.getSibilings().get(j).getPath();
+			for(int i = 0; i < path.getPathData().size(); i++){
+				sb.draw(selectImage((int)path.getPathData().get(i).z), path.getPathData().get(i).x, path.getPathData().get(i).y, 50f, 15f, 32f, 32f, 1f, 1f, (float)Math.toDegrees(path.getAngle()) - 90f);
+			}
 		}
 		
 		if(playerOnPath.getParent() != null){
-			drawAlongPath(sb, playerOnPath.getParent().getPath(), playerOnPath.getParent().getPath().getRandom(), 0);
-			
-			for(int i = 0; i < playerOnPath.getParent().getSibilings().size(); i++){
-				drawAlongPath(sb, playerOnPath.getParent().getSibilings().get(i).getPath(), playerOnPath.getParent().getSibilings().get(i).getPath().getRandom(), 0);
+			path = playerOnPath.getParent().getPath();
+			for(int i = 0; i < path.getPathData().size(); i++){
+				sb.draw(selectImage((int)path.getPathData().get(i).z), path.getPathData().get(i).x, path.getPathData().get(i).y, 50f, 15f, 32f, 32f, 1f, 1f, (float)Math.toDegrees(path.getAngle()) - 90f);
 			}
-			
 		}
 		
-		sr.end();
+		sb.end();
 		
 	}
 	
