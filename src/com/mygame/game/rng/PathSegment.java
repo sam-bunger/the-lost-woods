@@ -89,8 +89,8 @@ public class PathSegment {
 		pathData = data;
 	}
 	
-	public void setLength(float length){
-		end = new Vector2((float)(start.x + (length * Math.cos(angle))), (float)(start.y + (length * Math.sin(angle))));
+	public Vector2 getEndWithLength(float length){
+		return new Vector2((float)(start.x + (length * Math.cos(angle))), (float)(start.y + (length * Math.sin(angle))));
 	}
 	
 	public boolean getIntersection(PathSegment a){

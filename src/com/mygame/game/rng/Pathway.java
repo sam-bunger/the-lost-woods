@@ -1,5 +1,6 @@
 package com.mygame.game.rng;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -113,34 +114,33 @@ public class Pathway {
 		generate();
 		
 		if(playerOnPath.getPath().getPathData().size() == 0){
-			System.out.println("currentPathGenerated");
-			drawAlongPath(playerOnPath.getPath());
+			drawAlongPath(playerOnPath.getPath(), 0);
 		}
 		
 		for(int i = 0; i < playerOnPath.getChildren().size(); i++){
 			if(playerOnPath.getChildren().get(i).getPath().getPathData().size() == 0){
-				System.out.println("childrenPathGenerated");
-				drawAlongPath(playerOnPath.getChildren().get(i).getPath());
+				drawAlongPath(playerOnPath.getChildren().get(i).getPath(), 0);
 			}
 		}
 		
 		
 	}
     
-    public void drawAlongPath(PathSegment path){
+    public void drawAlongPath(PathSegment path, float length){
     	
-    	int rand1 = (int) (Math.random()*10) + 60;
+    	float rand1 = (float)(Math.random()*10) + 60;
     	
-    	if(path.getLength() - rand1 < 0) return;
+    	if(path.getLength() < length) return;
     	
     	int rand2 = (int) (Math.random()*20) + 10;
     	int rand3 = (int) (Math.random()*20) + 10;
     	int randImage = (int) (Math.random()*numImages);
 
-    	path.getPathData().add(new Vector3(path.getEnd().x - rand2, path.getEnd().y - rand3, randImage));
-    	path.setLength(path.getLength() - rand1);
+    	Vector2 end = path.getEndWithLength(length);
     	
-    	drawAlongPath(path);
+    	path.getPathData().add(new Vector3(end.x - rand2, end.y - rand3, randImage));
+    	
+    	drawAlongPath(path, length + rand1);
     	
     }
 
@@ -205,6 +205,12 @@ public class Pathway {
 		}
 		
 		sb.end();
+		
+		sr.setAutoShapeType(true);
+		sr.setColor(Color.CYAN);
+		sr.begin();
+		sr.line(playerOnPath.getPath().getStart(), playerOnPath.getPath().getEnd());
+		sr.end();
 		
 	}
 	
