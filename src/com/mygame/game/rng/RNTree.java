@@ -49,11 +49,30 @@ public class RNTree {
 		forest.add(tree);
 		
 	}
+	
+	public void generateForest(PathSegment path){
+		
+		int pathDist = 30;
+		
+		Vector2 topCorner = new Vector2((float)(path.getStart().x + pathDist*Math.cos(path.getAngle())), path.getStart().y + (float)(pathDist*Math.sin(path.getAngle())));
+		Vector2 topCorner2 = new Vector2((float)(path.getEnd().x + pathDist*3*Math.cos(path.getAngle())), path.getEnd().y + (float)(pathDist*3*Math.sin(path.getAngle())));
+		
+		genTreeBlock(topCorner, topCorner2, path.getAngle());
+		
+	}
+	
+	public void genTreeBlock(Vector2 corner, Vector2 corner2, float angle){
+		
+		
+		
+	}
+	
 	public void genTreeSquare(int amount, Vector2 center, Vector2 size){
 		for(int i=0;i<amount;i++){
 			createTree((int)(center.x+Math.random()*size.x),(int) (center.y+Math.random()*size.y));
 		}
 	}
+	
 	public ArrayList<Tree> getForest(){return forest;}
 	
 	public void render(SpriteBatch sb){

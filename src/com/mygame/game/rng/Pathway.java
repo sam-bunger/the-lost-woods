@@ -15,7 +15,7 @@ public class Pathway {
 	private Vector2 start;
 	private float angle;
 	
-	private final int numImages = 2;
+	private final int numImages = 3;
 	
 	private int pathSizeMin = 500;
 	private int pathSizeMax = 1000;
@@ -26,6 +26,7 @@ public class Pathway {
 	
 	private TextureRegion path_1 = new TextureRegion(TheLostWoods.res.getTexture("path_1"));
 	private TextureRegion path_2 = new TextureRegion(TheLostWoods.res.getTexture("path_2"));
+	private TextureRegion path_3 = new TextureRegion(TheLostWoods.res.getTexture("path_3"));
 	
 	public Pathway(OrthographicCamera cam){
 		this.start = new Vector2(0, 0);
@@ -132,8 +133,8 @@ public class Pathway {
     	
     	if(path.getLength() < length) return;
     	
-    	int rand2 = (int) (Math.random()*20) + 10;
-    	int rand3 = (int) (Math.random()*20) + 10;
+    	int rand2 = (int) (Math.random()*30) + 20;
+    	int rand3 = (int) (Math.random()*30) + 20;
     	int randImage = (int) (Math.random()*numImages);
 
     	Vector2 end = path.getEndWithLength(length);
@@ -149,6 +150,7 @@ public class Pathway {
     	switch(randomImage){
     		case 0: return path_1;
     		case 1: return path_2;
+    		case 2: return path_3;
     	}
     	
     	return path_1;
