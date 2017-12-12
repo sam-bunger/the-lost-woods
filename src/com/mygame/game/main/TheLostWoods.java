@@ -56,26 +56,6 @@ public class TheLostWoods extends ApplicationAdapter {
 		res.loadTexture("Sprites/treeLeavesTest.png", "treeLeaves");
 		res.loadTexture("Sprites/barrel.png", "barrel");
 		
-		//Dungeon - Labyrinth
-		res.loadTexture("DungeonBG/Labyrinth/0000.0_Labyrinth.png", "0000.0");
-		res.loadTexture("DungeonBG/Labyrinth/0000.1_Labyrinth.png", "0000.1");
-		res.loadTexture("DungeonBG/Labyrinth/1111.0_Labyrinth.png", "1111.0");
-		res.loadTexture("DungeonBG/Labyrinth/1111.1_Labyrinth.png", "1111.1");
-		res.loadTexture("DungeonBG/Labyrinth/0001.0_Labyrinth.png", "0001.0");
-		res.loadTexture("DungeonBG/Labyrinth/0010.0_Labyrinth.png", "0010.0");
-		res.loadTexture("DungeonBG/Labyrinth/0100.0_Labyrinth.png", "0100.0");
-		res.loadTexture("DungeonBG/Labyrinth/1000.0_Labyrinth.png", "1000.0");
-		res.loadTexture("DungeonBG/Labyrinth/0011.0_Labyrinth.png", "0011.0");
-		res.loadTexture("DungeonBG/Labyrinth/0110.0_Labyrinth.png", "0110.0");
-		res.loadTexture("DungeonBG/Labyrinth/1100.0_Labyrinth.png", "1100.0");
-		res.loadTexture("DungeonBG/Labyrinth/0111.0_Labyrinth.png", "0111.0");
-		res.loadTexture("DungeonBG/Labyrinth/1110.0_Labyrinth.png", "1110.0");
-		res.loadTexture("DungeonBG/Labyrinth/1011.0_Labyrinth.png", "1011.0");
-		res.loadTexture("DungeonBG/Labyrinth/1001.0_Labyrinth.png", "1001.0");
-		res.loadTexture("DungeonBG/Labyrinth/1010.0_Labyrinth.png", "1010.0");
-		res.loadTexture("DungeonBG/Labyrinth/0101.0_Labyrinth.png", "0101.0");
-		res.loadTexture("DungeonBG/Labyrinth/1101.0_Labyrinth.png", "1101.0");
-
 		//Forest
 		res.loadTexture("Forest/grass.png", "grass");
 		res.loadTexture("Forest/pathSegment.png", "pathSegment");
@@ -96,8 +76,8 @@ public class TheLostWoods extends ApplicationAdapter {
 		skt.create();
 		
 		try {
-			//gsm.push(new DungeonState(gsm));
-			gsm.push(new MenuState(gsm));
+			gsm.push(new DungeonState(gsm));
+			//gsm.push(new MenuState(gsm));
 			//gsm.push(new LevelState(gsm));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -119,11 +99,11 @@ public class TheLostWoods extends ApplicationAdapter {
 			gsm.render();
 			
 			sb.setProjectionMatrix(hudCam.combined);
-			/*
+			
 			sb.begin();
 			font.draw(sb, ""+Gdx.graphics.getFramesPerSecond(), 10, 20);
 			sb.end();
-			*/
+			
 			stage.act();
 	        stage.draw();
 		}

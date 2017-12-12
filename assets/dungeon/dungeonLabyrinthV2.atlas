@@ -1,0 +1,265 @@
+
+dungeonLabyrinthV2.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+0000_labyrinth
+  rotate: false
+  xy: 2, 410
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+0011h_labyrinth
+  rotate: false
+  xy: 2, 308
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+0011r_labyrinth
+  rotate: false
+  xy: 104, 410
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+0101h_labyrinth
+  rotate: false
+  xy: 2, 206
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+0110h_labyrinth
+  rotate: false
+  xy: 104, 308
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+0110r_labyrinth
+  rotate: false
+  xy: 206, 410
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+0111h_labyrinth
+  rotate: false
+  xy: 2, 104
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+0111r_labyrinth
+  rotate: false
+  xy: 2, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+0112r_labyrinth
+  rotate: false
+  xy: 104, 206
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+0211r_labyrinth
+  rotate: false
+  xy: 206, 308
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1001h_labyrinth
+  rotate: false
+  xy: 308, 410
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1001r_labyrinth
+  rotate: false
+  xy: 104, 104
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1010h_labyrinth
+  rotate: false
+  xy: 104, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1011h_labyrinth
+  rotate: false
+  xy: 206, 206
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1011r_labyrinth
+  rotate: false
+  xy: 308, 308
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1021r_labyrinth
+  rotate: false
+  xy: 410, 410
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1100h_labyrinth
+  rotate: false
+  xy: 206, 104
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1100r_labyrinth
+  rotate: false
+  xy: 206, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1101h_labyrinth
+  rotate: false
+  xy: 308, 206
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1101r_labyrinth
+  rotate: false
+  xy: 410, 308
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1102r_labyrinth
+  rotate: false
+  xy: 512, 410
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1110h_labyrinth
+  rotate: false
+  xy: 308, 104
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1110r_labyrinth
+  rotate: false
+  xy: 308, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1111h_labyrinth
+  rotate: false
+  xy: 410, 206
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1111r_labyrinth
+  rotate: false
+  xy: 512, 308
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1112r_labyrinth
+  rotate: false
+  xy: 614, 410
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1120r_labyrinth
+  rotate: false
+  xy: 410, 104
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1121r_labyrinth
+  rotate: false
+  xy: 410, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1122r_labyrinth
+  rotate: false
+  xy: 512, 206
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1201r_labyrinth
+  rotate: false
+  xy: 614, 308
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1211r_labyrinth
+  rotate: false
+  xy: 716, 410
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+1221r_labyrinth
+  rotate: false
+  xy: 512, 104
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+2011r_labyrinth
+  rotate: false
+  xy: 512, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+2110r_labyrinth
+  rotate: false
+  xy: 614, 206
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+2111r_labyrinth
+  rotate: false
+  xy: 716, 308
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+2112r_labyrinth
+  rotate: false
+  xy: 818, 410
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+2211r_labyrinth
+  rotate: false
+  xy: 614, 104
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
