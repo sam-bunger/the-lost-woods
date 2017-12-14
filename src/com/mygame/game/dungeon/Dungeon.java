@@ -22,6 +22,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.mygame.game.B2D.B2DShapeTools;
+import com.mygame.game.B2D.B2DVars;
 import com.mygame.game.dungeon.map.Grid;
 import com.mygame.game.dungeon.map.generator.room.DungeonGenerator;
 
@@ -29,14 +30,15 @@ public class Dungeon {
     private TextureAtlas tiles;
     private TextureRegion[][] imageArray;
     private Grid grid;
-    
-    private int currRow;
-	private int currCol;
+	
+	private int currRow, currCol, oldCol, oldRow;
 	
 	private int width = 100;
 	private int height = 100;
 	
 	private World world;
+	
+	private Body topLeft, topRight, botLeft, botRight;
     
     public Dungeon(World world) {
     	this.world  = world;
@@ -139,21 +141,49 @@ public class Dungeon {
 		
     }
     
+    
     public void setRooms(float x, float y) {
-		
+    	oldCol = currCol;
+    	oldRow = currRow;
+    	
 		currCol = (int) ((x + (width))/width) - 1;
 		currRow = (int) ((y + (height))/height) - 1;
-
-	}
-    
-	public void createCollision(){
-		
-		//Body topLeft = B2DShapeTools.createBox(world, 0, 0, 20, 40, true, false);
-		//Body topRight = B2DShapeTools.createBox(world, 80, 0, 20, 40, true, false);
-		//Body botRight = B2DShapeTools.createBox(world, 0, 0, 12, 12, true, false);
-		//Body botLeft = B2DShapeTools.createBox(world, 0, 0, 12, 12, true, false);
-		
 	
-	}
+		if(oldCol != currCol || oldRow != currRow){
+			if(!(currRow<0 || currCol <0 || currRow==grid.getHeight() || currRow==grid.getHeight())){
+				createRoomCollision(currRow, currCol);
+				
+			}
+		}
+
+    }
+    
+    private void createRoomCollision(int x,int y){
+    	
+    	//world.destroyBody(botLeft);
+    	//world.destroyBody(botRight);
+    	//world.destroyBody(topLeft);
+    	//world.destroyBody(topRight);
+    	
+    	String str = imageArray[currRow][currCol].toString();
+    	System.out.println(str.substring(0,4));
+    	
+    	if(str.substring(0,4).equals("0000")){
+    		return;
+    	}
+    	
+		if(str.substring(0, 1).equals("0")){ 
+			topRight = B2DShapeTools.createBox(world, currCol * width + 50, currRow * height + 80, 70, 20, true, false);
+		}
+		if(str.substring(1,2).equals("0")){
+			botRight = B2DShapeTools.createBox(world, currCol * width + 100, currRow * height+50, 20, 50, true, false);
+		}
+		if(str.substring(2,3).equals("0")){ 
+			botLeft = B2DShapeTools.createBox(world, currCol * width+50, currRow * height, 70, 5, true, false);
+		}
+		if(str.substring(3,4).equals("0")){ //Good
+			topLeft = B2DShapeTools.createBox(world, currCol * width, currRow * height + 50, 20, 50, true, false);
+		}
+    }
 
 }

@@ -38,7 +38,6 @@ public class DungeonState extends LevelState {
 		
 		
 		dungeon = new Dungeon(world);
-		dungeon.createCollision();
 		
 		ui = TheLostWoods.getUI();
 		ui.changeToGame();
