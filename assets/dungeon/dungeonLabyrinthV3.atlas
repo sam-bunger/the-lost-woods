@@ -1,5 +1,5 @@
 
-dungeonLabyrinthV2.png
+dungeonLabyrinthV3.png
 size: 1024,512
 format: RGBA8888
 filter: Nearest,Nearest
@@ -144,121 +144,149 @@ repeat: none
   orig: 100, 100
   offset: 0, 0
   index: -1
-1102r_labyrinth
+1101t
   rotate: false
   xy: 512, 410
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-1110h_labyrinth
+1102r_labyrinth
   rotate: false
   xy: 308, 104
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-1110r_labyrinth
+1110h_labyrinth
   rotate: false
   xy: 308, 2
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-1111h_labyrinth
+1110r_labyrinth
   rotate: false
   xy: 410, 206
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-1111r_labyrinth
+1111h_labyrinth
   rotate: false
   xy: 512, 308
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-1112r_labyrinth
+1111r_labyrinth
   rotate: false
   xy: 614, 410
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-1120r_labyrinth
+1112r_labyrinth
   rotate: false
   xy: 410, 104
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-1121r_labyrinth
+1120r_labyrinth
   rotate: false
   xy: 410, 2
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-1122r_labyrinth
+1121r_labyrinth
   rotate: false
   xy: 512, 206
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-1201r_labyrinth
+1121t
   rotate: false
   xy: 614, 308
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-1211r_labyrinth
+1122r_labyrinth
   rotate: false
   xy: 716, 410
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-1221r_labyrinth
+1122t
   rotate: false
   xy: 512, 104
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-2011r_labyrinth
+1201r_labyrinth
   rotate: false
   xy: 512, 2
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-2110r_labyrinth
+1211r_labyrinth
   rotate: false
   xy: 614, 206
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-2111r_labyrinth
+1221r_labyrinth
   rotate: false
   xy: 716, 308
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-2112r_labyrinth
+1221t
   rotate: false
   xy: 818, 410
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
-2211r_labyrinth
+2011r_labyrinth
   rotate: false
   xy: 614, 104
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+2110r_labyrinth
+  rotate: false
+  xy: 614, 2
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+2111r_labyrinth
+  rotate: false
+  xy: 716, 206
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+2112r_labyrinth
+  rotate: false
+  xy: 818, 308
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+2211r_labyrinth
+  rotate: false
+  xy: 920, 410
   size: 100, 100
   orig: 100, 100
   offset: 0, 0

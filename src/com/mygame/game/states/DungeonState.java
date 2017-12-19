@@ -91,7 +91,7 @@ public class DungeonState extends LevelState {
 		//Set Cameras to SpriteBatch
 		sb.setProjectionMatrix(cam.combined);
 		sr.setProjectionMatrix(cam.combined);
-		
+
 		dungeon.render(sb);
 		
 		follower1.renderAnim(sb);
@@ -99,7 +99,8 @@ public class DungeonState extends LevelState {
 		rayHandler.render();
 		
 		player.renderAnim(sb);
-	
+		
+		dungeon.renderTop(sb);
 		
 		//Render Box2D Camera
 		b2dr.render(world, b2dCam.combined);

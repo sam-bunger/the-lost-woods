@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygame.game.UI.UserInterface;
 import com.mygame.game.handlers.*;
 import com.mygame.game.states.*;
@@ -41,6 +44,8 @@ public class TheLostWoods extends ApplicationAdapter {
 	
 	public static BitmapFont font;
 	
+	private Viewport viewport;
+	
 	@SuppressWarnings("static-access")
 	@Override
 	public void create () {
@@ -67,6 +72,11 @@ public class TheLostWoods extends ApplicationAdapter {
 		
 		hudCam = new OrthographicCamera();
 		hudCam.setToOrtho(false, WIDTH, HEIGHT);
+		
+		viewport = new FitViewport(910, 540, cam);
+		//viewport = new FitViewport(1920,1080,hudCam);
+	    viewport.apply();
+
 		
 		stage = new Stage();
 		

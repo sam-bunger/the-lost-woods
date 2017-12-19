@@ -1,34 +1,20 @@
 package com.mygame.game.dungeon;
 
-import static com.mygame.game.B2D.B2DVars.BIT_PLAYER;
-import static com.mygame.game.B2D.B2DVars.BIT_WALL;
-import static com.mygame.game.B2D.B2DVars.PPM;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.mygame.game.B2D.B2DShapeTools;
-import com.mygame.game.B2D.B2DVars;
 import com.mygame.game.dungeon.map.Grid;
 import com.mygame.game.dungeon.map.generator.room.DungeonGenerator;
 
 public class Dungeon {
     private TextureAtlas tiles;
     private TextureRegion[][] imageArray;
+    private TextureRegion[][] topImageArray;
     private Grid grid;
 	
 	private int currRow, currCol, oldCol, oldRow;
@@ -45,7 +31,8 @@ public class Dungeon {
     	
         grid = new Grid(512); // This algorithm likes odd-sized maps, although it works either way.
         imageArray = new TextureRegion[512][512];
-        tiles = new TextureAtlas(Gdx.files.internal("dungeon/dungeonLabyrinthV2.atlas"));
+        topImageArray = new TextureRegion[512][512];
+        tiles = new TextureAtlas(Gdx.files.internal("dungeon/dungeonLabyrinthV3.atlas"));
        
         for (int x = 0; x < grid.getWidth(); x++) {
             for (int y = 0; y < grid.getHeight(); y++) {
@@ -84,6 +71,18 @@ public class Dungeon {
                 	
                 	imageArray[x][y] = tiles.findRegion(code + "h_labyrinth");
                 	
+                	//Top Layer
+                	if(code.substring(2,3).equals("0")){
+                		topImageArray[x][y] = tiles.findRegion("1101t"); 
+                	}else if(code.substring(3,4).equals("1") && code.substring(2,3).equals("1")){
+                		topImageArray[x][y] = tiles.findRegion("1222t");
+                	}else if(code.substring(1,2).equals("1")){
+                		topImageArray[x][y] = tiles.findRegion("1221t");   
+                	}else if(code.substring(3,4).equals("1")){
+                		topImageArray[x][y] = tiles.findRegion("1122t");   
+                	}
+                		
+                	
                     
                 }else if(cell == 0.5){ //Room
                 	String code = "1111";
@@ -115,11 +114,18 @@ public class Dungeon {
                 	
                 	imageArray[x][y] = tiles.findRegion(code + "r_labyrinth");
                 	
-                	
+                	if(code.substring(2,3).equals("0")){
+                		topImageArray[x][y] = tiles.findRegion("1101t"); 
+                	}else if(code.substring(3,4).equals("2") && code.substring(2,3).equals("2")){
+                		topImageArray[x][y] = tiles.findRegion("1222t");
+                	}else if(code.substring(1,2).equals("2")){
+                		topImageArray[x][y] = tiles.findRegion("1221t");   
+                	}else if(code.substring(3,4).equals("2")){
+                		topImageArray[x][y] = tiles.findRegion("1122t");   
+                	}
                 }
                 
             }
-            
         }
     }
 
@@ -138,7 +144,25 @@ public class Dungeon {
 				sb.end();
 			}
 		}
-		
+    }
+    
+    public void renderTop(SpriteBatch sb) {
+    	
+    	for(int row = (currRow - 4); row <= (currRow + 4); row++) {
+    		
+    		if(row >= (grid.getWidth()) || row < 0) continue;
+    		
+			for(int col = (currCol - 4); col <= (currCol + 4); col++) {
+				
+				if(col >= (grid.getHeight()) || col < 0 || imageArray[row][col] == null) continue;
+				
+				if(topImageArray[row][col] != null){
+					sb.begin();
+					sb.draw(topImageArray[row][col], col * width, row * height);
+					sb.end();
+				}
+			}
+		}
     }
     
     
@@ -166,24 +190,23 @@ public class Dungeon {
     	//world.destroyBody(topRight);
     	
     	String str = imageArray[currRow][currCol].toString();
-    	System.out.println(str.substring(0,4));
+    	//System.out.println(str.substring(0,4));
     	
     	if(str.substring(0,4).equals("0000")){
     		return;
     	}
     	
 		if(str.substring(0, 1).equals("0")){ 
-			topRight = B2DShapeTools.createBox(world, currCol * width + 50, currRow * height + 80, 70, 20, true, false);
+			B2DShapeTools.createBox(world, currCol * width + 50, currRow * height + 80, 70, 20, true, false);
 		}
 		if(str.substring(1,2).equals("0")){
-			botRight = B2DShapeTools.createBox(world, currCol * width + 100, currRow * height+50, 20, 50, true, false);
+			B2DShapeTools.createBox(world, currCol * width + 100, currRow * height+50, 20, 50, true, false);
 		}
 		if(str.substring(2,3).equals("0")){ 
-			botLeft = B2DShapeTools.createBox(world, currCol * width+50, currRow * height, 70, 5, true, false);
+			B2DShapeTools.createBox(world, currCol * width+50, currRow * height, 70, 5, true, false);
 		}
-		if(str.substring(3,4).equals("0")){ //Good
-			topLeft = B2DShapeTools.createBox(world, currCol * width, currRow * height + 50, 20, 50, true, false);
+		if(str.substring(3,4).equals("0")){
+			B2DShapeTools.createBox(world, currCol * width, currRow * height + 50, 20, 50, true, false);
 		}
     }
-
 }
