@@ -77,7 +77,6 @@ public class TheLostWoods extends ApplicationAdapter {
 		//viewport = new FitViewport(1920,1080,hudCam);
 	    viewport.apply();
 
-		
 		stage = new Stage();
 		
 		gsm = new GameStateManager(this);

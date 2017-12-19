@@ -123,6 +123,8 @@ public class Dungeon {
                 	}else if(code.substring(3,4).equals("2")){
                 		topImageArray[x][y] = tiles.findRegion("1122t");   
                 	}
+                }else{
+                	topImageArray[x][y] = tiles.findRegion("0000_labyrinth");   
                 }
                 
             }
@@ -148,7 +150,7 @@ public class Dungeon {
     
     public void renderTop(SpriteBatch sb) {
     	
-    	for(int row = (currRow - 4); row <= (currRow + 4); row++) {
+    	for(int row = (currRow - 8); row <= (currRow + 8); row++) {
     		
     		if(row >= (grid.getWidth()) || row < 0) continue;
     		

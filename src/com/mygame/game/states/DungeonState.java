@@ -25,7 +25,7 @@ import com.mygame.game.dungeon.Dungeon;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 
-public class DungeonState extends LevelState {
+public class DungeonState extends GameState {
 	
 	private Dungeon dungeon;
 	private UserInterface ui;
@@ -66,6 +66,7 @@ public class DungeonState extends LevelState {
 	}
 
 	public void update(float delta) {
+		super.update(delta);
 		
 		handleInput();
 		
@@ -73,28 +74,15 @@ public class DungeonState extends LevelState {
 		
 		dungeon.setRooms(cam.position.x, cam.position.y);
 		
-		player.update(delta);
-		
-		follower1.update(delta);
-		
-		//dungeon.update(delta);
-		
-		setCamPosition();
-		
 		rayHandler.setCombinedMatrix(cam.combined.cpy().scl(PPM));
 		
 		world.step(delta, 6, 2);
 	}
 
 	public void render() {
-		
-		//Set Cameras to SpriteBatch
-		sb.setProjectionMatrix(cam.combined);
-		sr.setProjectionMatrix(cam.combined);
+		super.render();
 
 		dungeon.render(sb);
-		
-		follower1.renderAnim(sb);
 		
 		rayHandler.render();
 		
@@ -103,13 +91,13 @@ public class DungeonState extends LevelState {
 		dungeon.renderTop(sb);
 		
 		//Render Box2D Camera
-		b2dr.render(world, b2dCam.combined);
+		//b2dr.render(world, b2dCam.combined);
 		
 	}
 
 	public void dispose() {
-		rayHandler.dispose();
 		super.dispose();
+		rayHandler.dispose();
 	}
 
 }

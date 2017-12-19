@@ -2,6 +2,7 @@ package com.mygame.game.handlers;
 
 import java.util.Stack;
 
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygame.game.main.TheLostWoods;
 import com.mygame.game.states.State;
 
