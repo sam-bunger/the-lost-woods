@@ -21,6 +21,7 @@ import com.mygame.game.UI.UserInterface;
 import com.mygame.game.handlers.GameStateManager;
 import com.mygame.game.main.TheLostWoods;
 import com.mygame.game.dungeon.Dungeon;
+import com.mygame.game.entities.Player;
 
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
@@ -32,6 +33,7 @@ public class DungeonState extends GameState {
 	
 	private RayHandler rayHandler;
 	private PointLight playerLight;
+	private Vector2 playerSpawn;
 
 	public DungeonState(GameStateManager gsm) throws IOException {
 		super(gsm);
@@ -43,11 +45,16 @@ public class DungeonState extends GameState {
 		ui.changeToGame();
 		
 		rayHandler = new RayHandler(world);
-		rayHandler.setAmbientLight(.5f);
+		rayHandler.setAmbientLight(0.4f);
+		
+		//Create player
+		playerBody = B2DShapeTools.createBox(world, 1000, 1000, 12, 12, false, true);
+		player = new Player(playerBody, cam);
 		
 		playerLight = new PointLight(rayHandler, 120, Color.GRAY, 2f, player.getPosition().x, player.getPosition().y + 5);
 		playerLight.setSoftnessLength(0f);
 		playerLight.attachToBody(playerBody,0,0);
+		
 		
 	}
 	
@@ -91,7 +98,7 @@ public class DungeonState extends GameState {
 		dungeon.renderTop(sb);
 		
 		//Render Box2D Camera
-		//b2dr.render(world, b2dCam.combined);
+		b2dr.render(world, b2dCam.combined);
 		
 	}
 

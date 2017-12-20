@@ -1,10 +1,13 @@
 package com.mygame.game.dungeon;
 
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygame.game.B2D.B2DShapeTools;
@@ -24,7 +27,7 @@ public class Dungeon {
 	
 	private World world;
 	
-	private Body topLeft, topRight, botLeft, botRight;
+	private Body[][][] collisionArray;
     
     public Dungeon(World world) {
     	this.world  = world;
@@ -32,6 +35,7 @@ public class Dungeon {
         grid = new Grid(512); // This algorithm likes odd-sized maps, although it works either way.
         imageArray = new TextureRegion[512][512];
         topImageArray = new TextureRegion[512][512];
+        collisionArray = new Body[3][3][4];
         tiles = new TextureAtlas(Gdx.files.internal("dungeon/dungeonLabyrinthV3.atlas"));
        
         for (int x = 0; x < grid.getWidth(); x++) {
@@ -175,40 +179,64 @@ public class Dungeon {
 		currCol = (int) ((x + (width))/width) - 1;
 		currRow = (int) ((y + (height))/height) - 1;
 	
+		
 		if(oldCol != currCol || oldRow != currRow){
 			if(!(currRow<0 || currCol <0 || currRow==grid.getHeight() || currRow==grid.getHeight())){
-				createRoomCollision(currRow, currCol);
-				
+		
+				for(int row = (currRow - 1); row <= (currRow + 1); row++) {
+		    		
+		    		if(row >= (grid.getWidth()) || row < 0) continue;
+		    		
+					for(int col = (currCol - 1); col <= (currCol + 1); col++) {
+						
+						if(col >= (grid.getHeight()) || col < 0 || imageArray[row][col] == null) continue;
+						
+						createRoomCollision(row, col);
+					}
+				}
 			}
 		}
-
+		
     }
     
     private void createRoomCollision(int x,int y){
     	
-    	//world.destroyBody(botLeft);
-    	//world.destroyBody(botRight);
-    	//world.destroyBody(topLeft);
-    	//world.destroyBody(topRight);
+    	String str = imageArray[x][y].toString();
     	
-    	String str = imageArray[currRow][currCol].toString();
-    	//System.out.println(str.substring(0,4));
+    	//world.destroyBody(collisionArray[(x-currRow)+1][(y-currCol)+1][0]);
+    	//world.destroyBody(collisionArray[(x-currRow)+1][(y-currCol)+1][1]);
+    	//world.destroyBody(collisionArray[(x-currRow)+1][(y-currCol)+1][2]);
+    	//world.destroyBody(collisionArray[(x-currRow)+1][(y-currCol)+1][3]);
     	
-    	if(str.substring(0,4).equals("0000")){
+    	if(str.substring(0, 4).equals("0000")){
     		return;
     	}
     	
 		if(str.substring(0, 1).equals("0")){ 
-			B2DShapeTools.createBox(world, currCol * width + 50, currRow * height + 80, 70, 20, true, false);
+			if(collisionArray[(x-currRow)+1][(y-currCol)+1][0] != null){
+				world.destroyBody(collisionArray[(x-currRow)+1][(y-currCol)+1][0]);
+			}
+			collisionArray[(x-currRow)+1][(y-currCol)+1][0] = B2DShapeTools.createBox(world, y * width + 50, x * height + 80, 70, 20, true, false);
 		}
 		if(str.substring(1,2).equals("0")){
-			B2DShapeTools.createBox(world, currCol * width + 100, currRow * height+50, 20, 50, true, false);
+			if(collisionArray[(x-currRow)+1][(y-currCol)+1][1] != null){
+				world.destroyBody(collisionArray[(x-currRow)+1][(y-currCol)+1][1]);
+			}
+			collisionArray[(x-currRow)+1][(y-currCol)+1][1] = B2DShapeTools.createBox(world, y * width + 100, x * height+50, 20, 50, true, false);
 		}
 		if(str.substring(2,3).equals("0")){ 
-			B2DShapeTools.createBox(world, currCol * width+50, currRow * height, 70, 5, true, false);
+			if(collisionArray[(x-currRow)+1][(y-currCol)+1][2] != null){
+				world.destroyBody(collisionArray[(x-currRow)+1][(y-currCol)+1][2]);
+			}
+			collisionArray[(x-currRow)+1][(y-currCol)+1][2] = B2DShapeTools.createBox(world, y * width+50, x * height, 70, 5, true, false);
 		}
 		if(str.substring(3,4).equals("0")){
-			B2DShapeTools.createBox(world, currCol * width, currRow * height + 50, 20, 50, true, false);
+			if(collisionArray[(x-currRow)+1][(y-currCol)+1][3] != null){
+				world.destroyBody(collisionArray[(x-currRow)+1][(y-currCol)+1][3]);
+			}
+			collisionArray[(x-currRow)+1][(y-currCol)+1][3] = B2DShapeTools.createBox(world, y * width, x * height + 50, 20, 50, true, false);
 		}
     }
+    
+    
 }

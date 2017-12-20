@@ -31,9 +31,6 @@ public class GameState extends State {
 		b2dCam = new OrthographicCamera();
 		b2dCam.setToOrtho(false, WIDTH / PPM, HEIGHT / PPM);
 		
-		//Create player
-		playerBody = B2DShapeTools.createBox(world, 0, 0, 12, 12, false, true);
-		player = new Player(playerBody, cam);
 		
 	}
 
@@ -55,7 +52,6 @@ public class GameState extends State {
 				b2dCam.zoom +=.01f;
 			}
 		}
-		System.out.println(cam.zoom);
 		
 	}
 
