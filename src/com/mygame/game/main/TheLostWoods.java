@@ -54,7 +54,7 @@ public class TheLostWoods extends ApplicationAdapter {
 		font.setColor(Color.WHITE);
 		
 		res = new Content();
-		res.loadTexture("Sprites/PlayerSprite.png", "player");
+		res.loadTexture("Sprites/playerSpriteSheetV1.png", "player");
 		
 		//tree b
 		res.loadTexture("Sprites/treeTrunkTest.png", "treeTrunk");
@@ -87,8 +87,8 @@ public class TheLostWoods extends ApplicationAdapter {
 		skt.create();
 		
 		try {
-			gsm.push(new DungeonState(gsm));
-			//gsm.push(new MenuState(gsm));
+			//gsm.push(new DungeonState(gsm));
+			gsm.push(new MenuState(gsm));
 			//gsm.push(new LevelState(gsm));
 		} catch (Exception e) {
 			e.printStackTrace();

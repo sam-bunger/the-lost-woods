@@ -24,7 +24,7 @@ public class Player extends GameObj {
 	private long flinchTimer;
 	
 	//Movement//
-	private int maxSpeed;
+	private float maxSpeed;
 	
 	//ACTIONS//
 	private static final int WALKING_LEFT = 0;
@@ -36,7 +36,7 @@ public class Player extends GameObj {
 	private static final int IDLE_UP = 6;
 	private static final int IDLE_DOWN = 7;
 	
-	private final int[] numFrames = { 10, 10, 7, 7, 1, 1, 1, 1 };
+	private final int[] numFrames = { 8, 8, 8, 8, 1, 1, 1, 1 };
 	
 	private OrthographicCamera cam;
 	
@@ -47,14 +47,14 @@ public class Player extends GameObj {
 		
 		this.cam = cam;
 		
-		maxSpeed = 2;
+		maxSpeed = 2.5f;
 		
 		previousAction = WALKING_DOWN;
 		currentAction = WALKING_DOWN;
 		Texture tex = TheLostWoods.res.getTexture("player");
-		TextureRegion[][] sprites = TextureRegion.split(tex, 26, 56);
+		TextureRegion[][] sprites = TextureRegion.split(tex, 26, 50);
 		
-		setAnimation(sprites, 0.1f);
+		setAnimation(sprites, 0.2f);
 		animation.setNumFrames(numFrames);
 		animation.setAnimation(currentAction);
 		

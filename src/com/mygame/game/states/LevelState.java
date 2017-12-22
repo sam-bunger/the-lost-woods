@@ -52,33 +52,20 @@ import com.mygame.game.UI.skins.elements.gameui.GameUIOrg;
 public class LevelState extends GameState {
 	
 	private RNTree forest1;
-	protected World world;
-	protected Box2DDebugRenderer b2dr;
-	
-	protected Player player;
-	
 	private Pathway pathNorth;
+	private Teleporter tele;
 	
-	protected OrthographicCamera b2dCam;
-	
-	protected Teleporter tele;
-	
-	protected Tree tree;
-	
+	private Tree tree;
 	private UserInterface ui;
-	
 	private TreasureChest chest;
-	
-	protected Body playerBody;
-	
 	private DayNightCycle sun;
 	
 	private RayHandler rayHandler;
 	private PointLight sunLight;
 	
 	//AI Test
-	protected B2DSteeringEntity entity1;
-	protected Follower follower1;
+	private B2DSteeringEntity entity1;
+	private Follower follower1;
 	
 	public LevelState(GameStateManager gsm) throws IOException {
 		super(gsm);
@@ -118,7 +105,7 @@ public class LevelState extends GameState {
 	}
 
 	public void handleInput() {
-		
+		super.handleInput();
 		player.handleInput();
 		GameUIOrg.handleInput();
 		
@@ -136,22 +123,22 @@ public class LevelState extends GameState {
 	}
 
 	public void update(float delta) {
-		if(!isPaused){
-			handleInput();
-			
-			sun.update();
-			
-			pathNorth.update(delta);
+		super.update(delta);
+		handleInput();
 		
-			sun.updateCam();
-			
-			follower1.update(delta);
-			
-			world.step(delta, 6, 2);
-		}
+		sun.update();
+		
+		pathNorth.update(delta);
+	
+		sun.updateCam();
+		
+		follower1.update(delta);
+		
+		world.step(delta, 6, 2);
 	}
 
 	public void render() {
+		super.render();
 		pathNorth.render(sb, sr);
 		
 		//forest1.renderTrunks(sb);
@@ -161,6 +148,8 @@ public class LevelState extends GameState {
 		chest.renderAnim(sb);
 		
 		//forest1.render(sb);
+		
+		player.renderAnim(sb);
 
 		sun.render();
 		
@@ -175,6 +164,7 @@ public class LevelState extends GameState {
 	}
 
 	public void dispose() {
+		super.dispose();
 		sun.dispose();
 	}
 

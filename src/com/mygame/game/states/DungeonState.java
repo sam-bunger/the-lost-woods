@@ -47,10 +47,6 @@ public class DungeonState extends GameState {
 		rayHandler = new RayHandler(world);
 		rayHandler.setAmbientLight(0.4f);
 		
-		//Create player
-		playerBody = B2DShapeTools.createBox(world, 1000, 1000, 12, 12, false, true);
-		player = new Player(playerBody, cam);
-		
 		playerLight = new PointLight(rayHandler, 120, Color.GRAY, 2f, player.getPosition().x, player.getPosition().y + 5);
 		playerLight.setSoftnessLength(0f);
 		playerLight.attachToBody(playerBody,0,0);

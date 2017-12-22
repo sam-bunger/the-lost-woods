@@ -8,7 +8,7 @@ import com.mygame.game.main.TheLostWoods;
 
 public class Follower extends GameObj{
 	
-	private final int[] numFrames = { 10, 10, 7, 7, 1, 1, 1, 1};
+	private final int[] numFrames = { 8, 8, 8, 8, 1, 1, 1, 1};
 	private B2DSteeringEntity entity;
 	
 
@@ -21,9 +21,9 @@ public class Follower extends GameObj{
 		previousAction = 3;
 		
 		Texture tex = TheLostWoods.res.getTexture(animName);
-		TextureRegion[][] sprites = TextureRegion.split(tex, 26, 56);
+		TextureRegion[][] sprites = TextureRegion.split(tex, 26, 50);
 		
-		setAnimation(sprites, 0.1f);
+		setAnimation(sprites, 0.2f);
 		animation.setNumFrames(numFrames);
 		animation.setAnimation(currentAction);
 		

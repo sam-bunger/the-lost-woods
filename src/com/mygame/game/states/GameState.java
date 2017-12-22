@@ -24,12 +24,16 @@ public class GameState extends State {
 	protected Player player;
 	protected Body playerBody;
 
-	protected GameState(GameStateManager gsm) {
+	public GameState(GameStateManager gsm) {
 		super(gsm);
 		world = new World(new Vector2(0, 0), true);
 		b2dr = new Box2DDebugRenderer();
 		b2dCam = new OrthographicCamera();
 		b2dCam.setToOrtho(false, WIDTH / PPM, HEIGHT / PPM);
+		
+		//Create player
+		playerBody = B2DShapeTools.createBox(world, 0, 0, 12, 12, false, true);
+		player = new Player(playerBody, cam);
 		
 		
 	}
