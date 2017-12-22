@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygame.game.handlers.GameStateManager;
 import com.mygame.game.main.TheLostWoods;
 
@@ -30,6 +31,7 @@ public abstract class State {
 		cam = game.getCamera();
 		hudCam = game.getHUDCamera();
 		isPaused = false;
+		
 	}
 	
 	protected abstract void handleInput();
