@@ -122,12 +122,6 @@ public class LevelState extends GameState {
 		player.handleInput();
 		GameUIOrg.handleInput();
 		
-		if(Gdx.input.isKeyPressed(Keys.N)){
-			pathNorth.generatePath();
-		}
-		if(Gdx.input.isKeyPressed(Keys.C)){
-			pathNorth.clearPath();
-		}
 		if(Gdx.input.isKeyPressed(Keys.M)){
 			try {
 				gsm.push(new DungeonState(gsm));

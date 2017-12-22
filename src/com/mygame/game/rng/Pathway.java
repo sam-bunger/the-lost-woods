@@ -1,19 +1,13 @@
 package com.mygame.game.rng;
 
-import java.awt.Point;
-import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.mygame.game.handlers.TreeNode;
 import com.mygame.game.main.TheLostWoods;
 
 public class Pathway {
@@ -21,153 +15,72 @@ public class Pathway {
 	private Vector2 start;
 	private float angle;
 	
-	private ArrayList<PathSegment> open;
-	private ArrayList<PathSegment> closed;
+	private final int numImages = 3;
 	
-	private int pathSizeMin = 100;
+	private int pathSizeMin = 500;
 	private int pathSizeMax = 1000;
 	
-	private float timeElapsed;
-	
-	//This threshold must be reached for the path to split into two paths
-	private double splitThreshold;
-	
-	private int maxCount;
+	private TreeNode playerOnPath;
 	
 	private OrthographicCamera cam;
 	
-	private TextureRegion reg = new TextureRegion(TheLostWoods.res.getTexture("pathSegment"));
+	private TextureRegion path_1 = new TextureRegion(TheLostWoods.res.getTexture("path_1"));
+	private TextureRegion path_2 = new TextureRegion(TheLostWoods.res.getTexture("path_2"));
+	private TextureRegion path_3 = new TextureRegion(TheLostWoods.res.getTexture("path_3"));
 	
 	public Pathway(OrthographicCamera cam){
 		this.start = new Vector2(0, 0);
 		angle = 0f;
-		splitThreshold = 0.9;
-		maxCount = 100;
-		open = new ArrayList<PathSegment>();
-		closed = new ArrayList<PathSegment>();
-		timeElapsed = 0;
 		this.cam = cam;
-		
-		generatePath();
+		playerOnPath = new TreeNode(new PathSegment(start, randomLength(), angle), null);
 	}
 	
 	public Pathway(float x, float y, float angle, OrthographicCamera cam){
 		this.start = new Vector2(x, y);
 		this.angle = angle;
-		splitThreshold = 0.9;
-		maxCount = 100;
-		open = new ArrayList<PathSegment>();
-		closed = new ArrayList<PathSegment>();
-		timeElapsed = 0;
-		this.cam = cam;
-		
-		generatePath();
-	}
-	
-	public void clearPath(){
-		open.clear();
-		closed.clear();
-	}
-	
-	public void generatePath(){
-		open.add(new PathSegment(start, randomLength(), angle));
-		Generation(0);
-	}
-	
-	public boolean Generation(int count){
-		
-		if(count > maxCount) return true;
-		
-		ArrayList<PathSegment> temp = new ArrayList<PathSegment>();
-		
-		double rand;
-		boolean intersect1;
-		boolean intersect2;
-		
-		
-		for(int i = 0; i < open.size(); i++){
-			
-			PathSegment current = open.get(i);
-			
-			closed.add(current);
-			
-			PathSegment a, b;
-			
-			rand = Math.random();
-			
-			intersect1 = false;
-			intersect2 = false;
 
-			if(rand > splitThreshold){
-				
+		this.cam = cam;
+		playerOnPath = new TreeNode(new PathSegment(start, randomLength(), angle), null);
+	}
+
+	public void generate(){
+		
+		double randomNum = Math.random();
+		PathSegment current = playerOnPath.getPath();
+		
+		if(playerOnPath.getChildren().size() == 0){
+			if(randomNum > 0.5){
 				float[] angles = getTwoAngles(current.getAngle());
-				
-				a = new PathSegment(current.getEnd(), randomLength(), angles[0], current);
-				b = new PathSegment(current.getEnd(), randomLength(), angles[1], current);
-				
-				for(int k = 0; k < closed.size(); k++){
-					
-					//System.out.println(a.getIntersection(closed.get(k)));
-					if(a.getIntersection(closed.get(k)) && !a.getParent().equals(closed.get(k))){
-						intersect1 = true;
-						closed.add(new PathSegment(current.getEnd(), closed.get(k).getDistanceFromPoint(current.getEnd()), angles[0], current));
-						break;
-					}	
-				}
-				
-				if(!intersect1){
-					temp.add(a);
-				}
-				
-				for(int k = 0; k < closed.size(); k++){
-					
-					//System.out.println(b.getIntersection(closed.get(k)));
-					if(b.getIntersection(closed.get(k)) && !b.getParent().equals(closed.get(k))){
-						intersect2 = true;
-						closed.add(new PathSegment(current.getEnd(), closed.get(k).getDistanceFromPoint(current.getEnd()), angles[1], current));
-						break;
-					}
-					
-				}
-				
-				if(!intersect2){
-					temp.add(b);
-				}
-				
-				
+				playerOnPath.addChild(new TreeNode(new PathSegment(current.getEnd(), randomLength(), angles[0], current), playerOnPath));
+				playerOnPath.addChild(new TreeNode(new PathSegment(current.getEnd(), randomLength(), angles[1], current), playerOnPath));
 			}else{
-				
 				float angle = getOneAngle(current.getAngle());
-				
-				a = new PathSegment(current.getEnd(), randomLength(), angle, current);
-				
-				for(int k = 0; k < closed.size(); k++){
-					//System.out.println(a.getIntersection(closed.get(k)));
-					if(a.getIntersection(closed.get(k)) && !a.getParent().equals(closed.get(k))){
-						intersect1 = true;
-						closed.add(new PathSegment(current.getEnd(), closed.get(k).getDistanceFromPoint(current.getEnd()), angle, current));
-						break;
-					}
-					
-				}
-				
-				if(!intersect1){
-					temp.add(a);
-				}
-				
+				playerOnPath.addChild(new TreeNode(new PathSegment(current.getEnd(), randomLength(), angle, current), playerOnPath));
 			}
-			
-		}
-			
-		open.clear();
-		
-		while(temp.size() > 0){
-			open.add(temp.get(0));
-			temp.remove(0);
+			playerOnPath.setSibilings();
 		}
 		
+		Vector2 position = new Vector2(cam.position.x, cam.position.y);
+		float currentDistance = current.getDistanceFromPoint(position);
+		for(int i = 0; i < playerOnPath.getChildren().size(); i++){
+			
+			if(currentDistance > playerOnPath.getChildren().get(i).getPath().getDistanceFromPoint(position)){
+				playerOnPath = playerOnPath.getChildren().get(i);
+			}
+				
+		}
 		
-		return Generation(count += 1);
+		for(int i = 0; i < playerOnPath.getSibilings().size(); i++){
+			
+			if(currentDistance > playerOnPath.getSibilings().get(i).getPath().getDistanceFromPoint(position)){
+				playerOnPath = playerOnPath.getSibilings().get(i);
+			}
+				
+		}
+		
+		if(playerOnPath.getParent() != null && currentDistance > playerOnPath.getParent().getPath().getDistanceFromPoint(position)){
+			playerOnPath = playerOnPath.getParent();
+		}
 		
 	}
 	
@@ -199,70 +112,48 @@ public class Pathway {
 	
 	public void update(float delta){
 		
-		timeElapsed += delta;
-
-		if(timeElapsed > 0.2){
-			timeElapsed = 0;
-			sort(closed);
+		generate();
+		
+		if(playerOnPath.getPath().getPathData().size() == 0){
+			drawAlongPath(playerOnPath.getPath(), 0);
 		}
 		
-	}
-	
-	public void sort(ArrayList<PathSegment> arr){
+		for(int i = 0; i < playerOnPath.getChildren().size(); i++){
+			if(playerOnPath.getChildren().get(i).getPath().getPathData().size() == 0){
+				drawAlongPath(playerOnPath.getChildren().get(i).getPath(), 0);
+			}
+		}
 		
-        int n = arr.size();
- 
-        // Build heap (rearrange array)
-        for (int i = n / 2 - 1; i >= 0; i--)
-            heapify(arr, n, i);
- 
-        // One by one extract an element from heap
-        for (int i=n-1; i>=0; i--)
-        {
-            // Move current root to end
-            PathSegment temp = arr.get(0);
-            arr.set(0, arr.get(i));
-            arr.set(i, temp);
-            
-            // call max heapify on the reduced heap
-            heapify(arr, i, 0);
-        }
+		
+	}
+    
+    public void drawAlongPath(PathSegment path, float length){
+    	
+    	float rand1 = (float)(Math.random()*10) + 60;
+    	
+    	if(path.getLength() < length) return;
+    	
+    	int rand2 = (int) (Math.random()*30) + 20;
+    	int rand3 = (int) (Math.random()*30) + 20;
+    	int randImage = (int) (Math.random()*numImages);
+
+    	Vector2 end = path.getEndWithLength(length);
+    	
+    	path.getPathData().add(new Vector3(end.x - rand2, end.y - rand3, randImage));
+    	
+    	drawAlongPath(path, length + rand1);
+    	
     }
- 
-    // To heapify a subtree rooted with node i which is
-    // an index in arr[]. n is size of heap
-	/**
-	 * 
-	 * @param arr  
-	 * @param n  
-	 * @param i
-	 */
-    void heapify(ArrayList<PathSegment> arr, int n, int i)
-    {
-        int largest = i;  // Initialize largest as root
-        int l = 2*i + 1;  // left = 2*i + 1
-        int r = 2*i + 2;  // right = 2*i + 2
-        
-        // If left child is larger than root
-        if (l < n && (arr.get(l).endDistFromPlayer(cam.position.x, cam.position.y) > arr.get(largest).endDistFromPlayer(cam.position.x, cam.position.y) || 
-        		      arr.get(l).startDistFromPlayer(cam.position.x, cam.position.y) > arr.get(largest).startDistFromPlayer(cam.position.x, cam.position.y))){
-            largest = l;
-        }
-        // If right child is larger than largest so far
-        if (r < n && (arr.get(r).endDistFromPlayer(cam.position.x, cam.position.y) > arr.get(largest).endDistFromPlayer(cam.position.x, cam.position.y) ||
-        			  arr.get(r).startDistFromPlayer(cam.position.x, cam.position.y) > arr.get(largest).startDistFromPlayer(cam.position.x, cam.position.y))){
-            largest = r;
-        }
-        // If largest is not root
-        if (largest != i)
-        {
-            PathSegment swap = arr.get(i);
-            arr.set(i, arr.get(largest));
-            arr.set(largest, swap);
- 
-            // Recursively heapify the affected sub-tree
-            heapify(arr, n, largest);
-        }
+
+    private TextureRegion selectImage(int randomImage){
+    	
+    	switch(randomImage){
+    		case 0: return path_1;
+    		case 1: return path_2;
+    		case 2: return path_3;
+    	}
+    	
+    	return path_1;
     }
     
     public void drawGrass(SpriteBatch sb){
@@ -281,36 +172,46 @@ public class Pathway {
 		}
     	
     }
-    
-    public void drawAlongPath(SpriteBatch sb, PathSegment path){
-    	
-    	if(path.getLength() - 30 < 0) return;
-    	
-    	sb.begin();
-    	sb.draw(reg, path.getEnd().x, path.getEnd().y, 50f, 15f, 100f, 30f, 1f, 1f, (float)Math.toDegrees(path.getAngle()) - 90f);
-    	sb.end();
-    	
-    	drawAlongPath(sb, new PathSegment(path.getStart(), path.getLength() - 30, path.getAngle(), path));
-    	
-    }
 	
 	public void render(SpriteBatch sb, ShapeRenderer sr){
-		sr.setAutoShapeType(true);
-        sr.setColor(Color.RED);
-		sr.begin();
 		
 		drawGrass(sb);
 		
-		for(int i = 0; i < 10; i++){
-			
-			PathSegment current = closed.get(i);	   
-			
-			drawAlongPath(sb, current);
-			
-	        //sr.line(current.getStart().x, current.getStart().y, current.getEnd().x, current.getEnd().y);
-	        
+		sb.begin();
+		
+		PathSegment path = playerOnPath.getPath();
+		
+		for(int i = 0; i < path.getPathData().size(); i++){
+			sb.draw(selectImage((int)path.getPathData().get(i).z), path.getPathData().get(i).x, path.getPathData().get(i).y, 50f, 15f, 32f, 32f, 1f, 1f, (float)Math.toDegrees(path.getAngle()) - 90f);
 		}
 		
+		for(int j = 0; j < playerOnPath.getChildren().size(); j++){
+			path = playerOnPath.getChildren().get(j).getPath();
+			for(int i = 0; i < path.getPathData().size(); i++){
+				sb.draw(selectImage((int)path.getPathData().get(i).z), path.getPathData().get(i).x, path.getPathData().get(i).y, 50f, 15f, 32f, 32f, 1f, 1f, (float)Math.toDegrees(path.getAngle()) - 90f);
+			}
+		}
+		
+		for(int j = 0; j < playerOnPath.getSibilings().size(); j++){
+			path = playerOnPath.getSibilings().get(j).getPath();
+			for(int i = 0; i < path.getPathData().size(); i++){
+				sb.draw(selectImage((int)path.getPathData().get(i).z), path.getPathData().get(i).x, path.getPathData().get(i).y, 50f, 15f, 32f, 32f, 1f, 1f, (float)Math.toDegrees(path.getAngle()) - 90f);
+			}
+		}
+		
+		if(playerOnPath.getParent() != null){
+			path = playerOnPath.getParent().getPath();
+			for(int i = 0; i < path.getPathData().size(); i++){
+				sb.draw(selectImage((int)path.getPathData().get(i).z), path.getPathData().get(i).x, path.getPathData().get(i).y, 50f, 15f, 32f, 32f, 1f, 1f, (float)Math.toDegrees(path.getAngle()) - 90f);
+			}
+		}
+		
+		sb.end();
+		
+		sr.setAutoShapeType(true);
+		sr.setColor(Color.CYAN);
+		sr.begin();
+		sr.line(playerOnPath.getPath().getStart(), playerOnPath.getPath().getEnd());
 		sr.end();
 		
 	}
