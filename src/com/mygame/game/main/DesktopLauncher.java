@@ -21,7 +21,6 @@ public class DesktopLauncher {
 		config.height = TheLostWoods.HEIGHT * TheLostWoods.SCALE;
 		config.title = TheLostWoods.TITLE;
 		
-		
 		new LwjglApplication(new TheLostWoods(), config);
 	}
 	
