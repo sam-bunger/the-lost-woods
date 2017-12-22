@@ -28,8 +28,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.mygame.game.entities.Player;
 import com.mygame.game.entities.DayNightCycle;
 import com.mygame.game.entities.Follower;
@@ -51,7 +49,7 @@ import com.mygame.game.B2D.B2DLight.LightData;
 import com.mygame.game.UI.UserInterface;
 import com.mygame.game.UI.skins.elements.gameui.GameUIOrg;
 
-public class LevelState extends State {
+public class LevelState extends GameState {
 	
 	private RNTree forest1;
 	protected World world;
@@ -91,11 +89,6 @@ public class LevelState extends State {
 		//create paths
 		pathNorth = new Pathway((WIDTH/2), (HEIGHT/2), (float)Math.toRadians(90), cam);
 		
-		
-		world = new World(new Vector2(0, 0), true);
-		b2dr = new Box2DDebugRenderer();
-		
-		createPlayer();
 		B2DSteeringEntity target = new B2DSteeringEntity(playerBody);
 		
 		createTeleporter();
@@ -107,9 +100,6 @@ public class LevelState extends State {
 		//forest1 = new RNTree(world);
 		//forest1.genTreeSquare(100, new Vector2(0,0), new Vector2(1000, 1000));
 		
-		//set up box2d cam
-		b2dCam = new OrthographicCamera();
-		b2dCam.setToOrtho(false, WIDTH / PPM, HEIGHT / PPM);
 		
 		sun = new DayNightCycle(world, cam, playerBody, 600, 1800, 0.5);
 		
@@ -158,10 +148,7 @@ public class LevelState extends State {
 			sun.update();
 			
 			pathNorth.update(delta);
-			player.update(delta);
-			
-			setCamPosition();
-			
+		
 			sun.updateCam();
 			
 			follower1.update(delta);
@@ -171,16 +158,9 @@ public class LevelState extends State {
 	}
 
 	public void render() {
-		
-		//Set Cameras to SpriteBatch
-		sb.setProjectionMatrix(cam.combined);
-		sr.setProjectionMatrix(cam.combined);
-
 		pathNorth.render(sb, sr);
 		
 		//forest1.renderTrunks(sb);
-		
-		player.renderAnim(sb);
 		
 		follower1.renderAnim(sb);
 		
@@ -202,8 +182,6 @@ public class LevelState extends State {
 
 	public void dispose() {
 		sun.dispose();
-		b2dr.dispose();
-		world.dispose();
 	}
 
     private void createCollisionListener() {
@@ -306,14 +284,4 @@ public class LevelState extends State {
 		chest = new TreasureChest(body,36);
 		
 	}
-	
-	public void setCamPosition(){
-		
-		b2dCam.position.set(b2dCam.position.x + (player.getPosition().x - b2dCam.position.x) * 0.15f, b2dCam.position.y + (player.getPosition().y - b2dCam.position.y) * 0.15f, 0);
-		b2dCam.update();
-		
-		cam.position.set(cam.position.x + (player.getPosition().x * PPM - cam.position.x) * 0.15f, cam.position.y + (player.getPosition().y * PPM - cam.position.y) * 0.15f, 0);
-		cam.update();
-	}
-	
 }
