@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class B2DShapeTools {
 	
-	public static Body createCircle(World world, float x, float y, float r, boolean isStatic, boolean canRotate){
+	public static Body createCircle(World world, float x, float y, float r, boolean isStatic, boolean canRotate, boolean isSensor){
 		BodyDef bd = new BodyDef();
 		bd.fixedRotation = canRotate;
 		bd.linearDamping = 10f;
@@ -22,6 +22,7 @@ public class B2DShapeTools {
 			bd.type = BodyType.DynamicBody;
 		}
 		
+		
 		CircleShape shape = new CircleShape();
 		shape.setRadius(r/B2DVars.PPM);
 		
@@ -30,10 +31,14 @@ public class B2DShapeTools {
 		fd.friction = .95f;
 		fd.density = 1.0f;
 		
+		if(isSensor){
+			fd.isSensor = true;
+		}
+		
 		return world.createBody(bd).createFixture(fd).getBody();
 	}
 	
-	public static Body createBox(World world, float x, float y, float w, float h, boolean isStatic, boolean canRotate){
+	public static Body createBox(World world, float x, float y, float w, float h, boolean isStatic, boolean canRotate, boolean isSensor){
 		BodyDef bd = new BodyDef();
 		bd.fixedRotation = canRotate;
 		bd.linearDamping = 10f;
@@ -51,6 +56,10 @@ public class B2DShapeTools {
 		FixtureDef fd = new FixtureDef();
 		fd.shape = shape;
 		fd.density = 1.0f;
+		
+		if(isSensor){
+			fd.isSensor = true;
+		}
 		
 		return world.createBody(bd).createFixture(fd).getBody();
 	}

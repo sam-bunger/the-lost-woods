@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygame.game.B2D.B2DShapeTools;
 import com.mygame.game.entities.Player;
+import com.mygame.game.handlers.AttackManager;
 import com.mygame.game.handlers.GameStateManager;
 import com.mygame.game.main.TheLostWoods;
 
@@ -23,6 +24,8 @@ public class GameState extends State {
 	
 	protected Player player;
 	protected Body playerBody;
+	
+	protected AttackManager am;
 
 	public GameState(GameStateManager gsm) {
 		super(gsm);
@@ -31,9 +34,12 @@ public class GameState extends State {
 		b2dCam = new OrthographicCamera();
 		b2dCam.setToOrtho(false, WIDTH / PPM, HEIGHT / PPM);
 		
+		//am = new AttackManager();
+		//am.createContactListener(world);
+		
 		//Create player
-		playerBody = B2DShapeTools.createBox(world, 0, 0, 12, 12, false, true);
-		player = new Player(playerBody, cam);
+		playerBody = B2DShapeTools.createBox(world, 0, 0, 12, 12, false, true, false);
+		player = new Player(playerBody, cam, am, world);
 		
 		
 	}
@@ -67,10 +73,9 @@ public class GameState extends State {
 		
 		b2dCam.position.set(b2dCam.position.x + (player.getPosition().x - b2dCam.position.x) * 0.15f, b2dCam.position.y + (player.getPosition().y - b2dCam.position.y) * 0.15f, 0);
 		b2dCam.update();
-		
 		cam.position.set(cam.position.x + (player.getPosition().x * PPM - cam.position.x) * 0.15f, cam.position.y + (player.getPosition().y * PPM - cam.position.y) * 0.15f, 0);
-		
 		cam.update();
+		
 	}
 
 	@Override

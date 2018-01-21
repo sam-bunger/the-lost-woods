@@ -78,20 +78,14 @@ public class LevelState extends GameState {
 		
 		B2DSteeringEntity target = new B2DSteeringEntity(playerBody);
 		
-		createTeleporter();
-		
-		createChest(200,200);
-	
-		//createCollisionListener();
-		
 		//forest1 = new RNTree(world);
 		//forest1.genTreeSquare(100, new Vector2(0,0), new Vector2(1000, 1000));
 		
 		
-		sun = new DayNightCycle(world, cam, playerBody, 600, 1800, 0.5);
+		//sun = new DayNightCycle(world, cam, playerBody, 600, 1800, 0.5);
 		
 		
-		Body body1 = B2DShapeTools.createCircle(world,100,100,10,false,false);
+		Body body1 = B2DShapeTools.createCircle(world,100,100,10,false,false,false);
 		entity1 = new B2DSteeringEntity(body1, .1f, target);
 		
 		follower1 =  new Follower(body1, "player", entity1);
@@ -106,7 +100,6 @@ public class LevelState extends GameState {
 
 	public void handleInput() {
 		super.handleInput();
-		player.handleInput();
 		GameUIOrg.handleInput();
 		
 		if(Gdx.input.isKeyPressed(Keys.M)){
@@ -126,11 +119,11 @@ public class LevelState extends GameState {
 		super.update(delta);
 		handleInput();
 		
-		sun.update();
+		//sun.update();
 		
 		pathNorth.update(delta);
 	
-		sun.updateCam();
+		//sun.updateCam();
 		
 		follower1.update(delta);
 		
@@ -145,17 +138,15 @@ public class LevelState extends GameState {
 		
 		follower1.renderAnim(sb);
 		
-		chest.renderAnim(sb);
-		
 		//forest1.render(sb);
 		
 		player.renderAnim(sb);
 
-		sun.render();
+		//sun.render();
 		
-		sb.begin();
-		TheLostWoods.font.draw(sb, ""+sun.getCurrentTime(), 100, 100);
-		sb.end();
+		//sb.begin();
+		//TheLostWoods.font.draw(sb, ""+sun.getCurrentTime(), 100, 100);
+		//sb.end();
 		
 		//Render Box2D Camera
 		b2dr.render(world, b2dCam.combined);
@@ -165,107 +156,6 @@ public class LevelState extends GameState {
 
 	public void dispose() {
 		super.dispose();
-		sun.dispose();
-	}
-
-    private void createCollisionListener() {
-        world.setContactListener(new ContactListener() {
-
-            @Override
-            public void beginContact(Contact contact) {
-                Fixture fixtureA = contact.getFixtureA();
-                Fixture fixtureB = contact.getFixtureB();
-                Gdx.app.log("beginContact", "between " + fixtureA.getUserData() + " and " + fixtureB.getUserData());
-                //if(fixtureB.getBody() instanceof InteractObj){
-                	
-                //}
-            }
-
-            @Override
-            public void endContact(Contact contact) {
-                Fixture fixtureA = contact.getFixtureA();
-                Fixture fixtureB = contact.getFixtureB();
-                Gdx.app.log("endContact", "between " + fixtureA.toString() + " and " + fixtureB.toString());
-            }
-
-            @Override
-            public void preSolve(Contact contact, Manifold oldManifold) {
-            }
-
-            @Override
-            public void postSolve(Contact contact, ContactImpulse impulse) {
-            }
-
-        });
-    }
-	
-	public void createPlayer(){
-		playerBody = B2DShapeTools.createBox(world, 0, 0, 12, 12, false, true);
-		/*
-		BodyDef bdef = new BodyDef();
-		FixtureDef fdef = new FixtureDef();
-		PolygonShape shape = new PolygonShape();
-		
-		bdef.position.set(WIDTH/2/PPM, (HEIGHT/2)/PPM);
-		bdef.type = BodyType.DynamicBody;
-		playerBody = world.createBody(bdef);
-		
-		
-		shape.setAsBox(12/PPM, 12/PPM);
-		fdef.shape = shape;
-		fdef.filter.categoryBits = BIT_PLAYER;
-		fdef.filter.maskBits = BIT_WALL;
-		playerBody.createFixture(fdef).setUserData(new LightData(1.0f));
-		*/
-		//create player
-		try {
-			player = new Player(playerBody, cam);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void createTeleporter(){
-		
-		BodyDef bdef = new BodyDef();
-		FixtureDef fdef = new FixtureDef();
-		PolygonShape shape = new PolygonShape();
-		
-		bdef.position.set(WIDTH/2/PPM, (HEIGHT/2)/PPM);
-		bdef.type = BodyType.StaticBody;
-		Body body = world.createBody(bdef);
-		
-		shape.setAsBox(12/PPM, 12/PPM);
-		fdef.shape = shape;
-		fdef.filter.categoryBits = BIT_TELEPORTER;
-		fdef.filter.maskBits = BIT_PLAYER;
-		fdef.isSensor = true;
-		body.createFixture(fdef).setUserData(new LightData(1.0f));
-		
-		tele = new Teleporter(body, gsm, 2);
-		
-	}	
-	
-	public void createChest(int x, int y){
-		
-		BodyDef bdef = new BodyDef();
-		FixtureDef fdef = new FixtureDef();
-		PolygonShape shape = new PolygonShape();
-		
-		bdef.position.set(x/PPM, y/PPM);
-		bdef.type = BodyType.StaticBody;
-		Body body = world.createBody(bdef);
-		
-		
-		shape.setAsBox(12/PPM, 12/PPM);
-		fdef.shape = shape;
-		fdef.filter.categoryBits = BIT_WALL;
-		fdef.filter.maskBits = BIT_PLAYER;
-		
-		body.setUserData(chest);
-		body.createFixture(fdef).setUserData(new LightData(1.0f));
-		
-		chest = new TreasureChest(body,36);
-		
+		//sun.dispose();
 	}
 }
