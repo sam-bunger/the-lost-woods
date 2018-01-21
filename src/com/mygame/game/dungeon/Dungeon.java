@@ -216,25 +216,25 @@ public class Dungeon {
 			if(collisionArray[(x-currRow)+1][(y-currCol)+1][0] != null){
 				world.destroyBody(collisionArray[(x-currRow)+1][(y-currCol)+1][0]);
 			}
-			collisionArray[(x-currRow)+1][(y-currCol)+1][0] = B2DShapeTools.createBox(world, y * width + 50, x * height + 80, 70, 20, true, false);
+			collisionArray[(x-currRow)+1][(y-currCol)+1][0] = B2DShapeTools.createBox(world, y * width + 50, x * height + 100, 70, 20, true, false, false);
 		}
 		if(str.substring(1,2).equals("0")){
 			if(collisionArray[(x-currRow)+1][(y-currCol)+1][1] != null){
 				world.destroyBody(collisionArray[(x-currRow)+1][(y-currCol)+1][1]);
 			}
-			collisionArray[(x-currRow)+1][(y-currCol)+1][1] = B2DShapeTools.createBox(world, y * width + 100, x * height+50, 20, 50, true, false);
+			collisionArray[(x-currRow)+1][(y-currCol)+1][1] = B2DShapeTools.createBox(world, y * width + 100, x * height+50, 20, 50, true, false, false);
 		}
 		if(str.substring(2,3).equals("0")){ 
 			if(collisionArray[(x-currRow)+1][(y-currCol)+1][2] != null){
 				world.destroyBody(collisionArray[(x-currRow)+1][(y-currCol)+1][2]);
 			}
-			collisionArray[(x-currRow)+1][(y-currCol)+1][2] = B2DShapeTools.createBox(world, y * width+50, x * height, 70, 5, true, false);
+			collisionArray[(x-currRow)+1][(y-currCol)+1][2] = B2DShapeTools.createBox(world, y * width+50, x * height, 70, 5, true, false, false);
 		}
 		if(str.substring(3,4).equals("0")){
 			if(collisionArray[(x-currRow)+1][(y-currCol)+1][3] != null){
 				world.destroyBody(collisionArray[(x-currRow)+1][(y-currCol)+1][3]);
 			}
-			collisionArray[(x-currRow)+1][(y-currCol)+1][3] = B2DShapeTools.createBox(world, y * width, x * height + 50, 20, 50, true, false);
+			collisionArray[(x-currRow)+1][(y-currCol)+1][3] = B2DShapeTools.createBox(world, y * width, x * height + 50, 20, 50, true, false, false);
 		}
     }
     

@@ -51,6 +51,8 @@ public class DungeonState extends GameState {
 		playerLight.setSoftnessLength(0f);
 		playerLight.attachToBody(playerBody,0,0);
 		
+		player.setPosition(1000/PPM, 1000/PPM);
+		
 		
 	}
 	
@@ -94,7 +96,7 @@ public class DungeonState extends GameState {
 		dungeon.renderTop(sb);
 		
 		//Render Box2D Camera
-		b2dr.render(world, b2dCam.combined);
+		//b2dr.render(world, b2dCam.combined);
 		
 	}
 

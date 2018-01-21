@@ -19,8 +19,8 @@ import com.mygame.game.states.*;
 public class TheLostWoods extends ApplicationAdapter {
 	
 	//Game Window Basics
-	public static final int WIDTH = 640;
-	public static final int HEIGHT = 360;
+	public static final int WIDTH = 1080; //640
+	public static final int HEIGHT = 1080; //360
 	public static int SCALE = 3;
 	public static final String TITLE = "The Lost Woods";
 	
@@ -75,8 +75,8 @@ public class TheLostWoods extends ApplicationAdapter {
 		hudCam = new OrthographicCamera();
 		hudCam.setToOrtho(false, WIDTH, HEIGHT);
 		
-		viewport = new FitViewport(910, 540, cam);
-		//viewport = new FitViewport(1920,1080,hudCam);
+		viewport = new FitViewport(WIDTH, HEIGHT, cam);
+		//viewport = new FitViewport(16, 9, hudCam);
 	    viewport.apply();
 
 		stage = new Stage();

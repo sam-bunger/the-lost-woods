@@ -8,13 +8,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 import com.mygame.game.B2D.B2DVars;
+import com.mygame.game.handlers.AttackManager;
 import com.mygame.game.main.TheLostWoods;
 
 
 public class Player extends GameObj {
 	
 	private Vector2 direction;
+	private AttackManager am;
+	private World world;
 	
 	// player attributes
 	private int health;
@@ -41,11 +45,13 @@ public class Player extends GameObj {
 	private OrthographicCamera cam;
 	
 	
-	public Player(Body body, OrthographicCamera cam){
+	public Player(Body body, OrthographicCamera cam, AttackManager am, World w){
 
 		super(body);
 		
 		this.cam = cam;
+		this.am = am;
+		this.world = w;
 		
 		maxSpeed = 2.5f;
 		
@@ -103,6 +109,10 @@ public class Player extends GameObj {
 				animation.setDelay(0.1f);
 			}
 		}
+		if(Gdx.input.isKeyPressed(Keys.SPACE)){
+			am.newAttack(new Attack(10, 1, world, body.getPosition().x, body.getPosition().y, 100, 100));
+		}
+		
 		if(direction.x == 0 && direction.y == 0){
 			if(previousAction == WALKING_UP){
 				currentAction = IDLE_UP;
