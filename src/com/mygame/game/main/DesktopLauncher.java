@@ -17,8 +17,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		config.vSyncEnabled = true;
-		config.width = TheLostWoods.WIDTH;
-		config.height = TheLostWoods.HEIGHT;
+		config.width = TheLostWoods.WIDTH * TheLostWoods.SCALE;
+		config.height = TheLostWoods.HEIGHT * TheLostWoods.SCALE;
 		config.title = TheLostWoods.TITLE;
 		
 		

@@ -16,7 +16,7 @@ import com.mygame.game.UI.skins.tools.SkinContainer;
 
 public class GameUIOrg{
 	private SpellWindow spellWindow;
-	private static Stage stage;
+	protected static Stage stage;
 	private static InventoryWindow inventoryActor;
 	private static ArmorWindow armorWindow;
 	private DragAndDrop dragAndDrop;
@@ -49,6 +49,7 @@ public class GameUIOrg{
         addActor(tb);
         gameui.add(tb);
         */
+      
         
         dragAndDrop = new DragAndDrop();
         inventoryActor = new InventoryWindow(skinContainer.skin, new Inventory(48), dragAndDrop);

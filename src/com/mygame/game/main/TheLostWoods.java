@@ -19,8 +19,8 @@ import com.mygame.game.states.*;
 public class TheLostWoods extends ApplicationAdapter {
 	
 	//Game Window Basics
-	public static final int WIDTH = 1080; //640
-	public static final int HEIGHT = 1080; //360
+	public static final int WIDTH = 640; //640
+	public static final int HEIGHT = 360; //360
 	public static int SCALE = 3;
 	public static final String TITLE = "The Lost Woods";
 	
@@ -38,7 +38,7 @@ public class TheLostWoods extends ApplicationAdapter {
 	private OrthographicCamera hudCam;
 	
 	private static UserInterface skt;
-	protected Stage stage;
+	public static Stage stage;
 	
 	public static Content res;
 	

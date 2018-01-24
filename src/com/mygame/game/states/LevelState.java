@@ -89,6 +89,7 @@ public class LevelState extends GameState {
 		entity1 = new B2DSteeringEntity(body1, .1f, target);
 		
 		follower1 =  new Follower(body1, "player", entity1);
+		body1.setUserData(follower1);
 		
 		//BODY Types
 		/*

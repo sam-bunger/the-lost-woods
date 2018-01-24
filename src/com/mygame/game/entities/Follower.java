@@ -17,6 +17,9 @@ public class Follower extends GameObj{
 		
 		this.entity = entity;
 		
+		health = 25;
+		maxHealth = 25;
+		
 		currentAction = 3;
 		previousAction = 3;
 		

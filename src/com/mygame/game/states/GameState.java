@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygame.game.B2D.B2DShapeTools;
 import com.mygame.game.entities.Player;
-import com.mygame.game.handlers.AttackManager;
+import com.mygame.game.handlers.InteractionManager;
 import com.mygame.game.handlers.GameStateManager;
 import com.mygame.game.main.TheLostWoods;
 
@@ -25,7 +25,7 @@ public class GameState extends State {
 	protected Player player;
 	protected Body playerBody;
 	
-	protected AttackManager am;
+	protected InteractionManager im;
 
 	public GameState(GameStateManager gsm) {
 		super(gsm);
@@ -34,12 +34,12 @@ public class GameState extends State {
 		b2dCam = new OrthographicCamera();
 		b2dCam.setToOrtho(false, WIDTH / PPM, HEIGHT / PPM);
 		
-		//am = new AttackManager();
-		//am.createContactListener(world);
+		im = new InteractionManager(world);
 		
 		//Create player
 		playerBody = B2DShapeTools.createBox(world, 0, 0, 12, 12, false, true, false);
-		player = new Player(playerBody, cam, am, world);
+		player = new Player(playerBody, cam, im, world);
+		playerBody.setUserData(player);
 		
 		
 	}

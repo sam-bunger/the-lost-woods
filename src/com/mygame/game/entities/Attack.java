@@ -15,7 +15,7 @@ public class Attack {
 		this.attackTime = attackTime;
 		this.world = world;
 		hitBox = B2DShapeTools.createBox(world,x,y,w,h,true,false,true);
-		//hitBox.setUserData("attack");
+		hitBox.setUserData(this);
 	}
 	
 	public void destroyAttack(){

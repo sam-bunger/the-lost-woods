@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.mygame.game.B2D.B2DVars;
 import com.mygame.game.handlers.Animation;
+import com.mygame.game.main.TheLostWoods;
 
 /**
  * 
@@ -22,6 +23,10 @@ public class GameObj {
 	//B2D Body
 	protected Body body;
 	
+	protected float health;
+	protected float maxHealth;
+	protected HealthBar hb;
+	
 	protected Animation animation;
 	protected float width;
 	protected float height;
@@ -31,6 +36,9 @@ public class GameObj {
 	public GameObj(Body body){
 		this.body = body;
 		animation = new Animation();
+		hb = new HealthBar(100, 10);
+		hb.setRange(0, 100);
+		TheLostWoods.stage.addActor(hb);
 	}
 	
 	public void setAnimation(TextureRegion[][] reg, float delay){
@@ -41,6 +49,8 @@ public class GameObj {
 	
 	public void update(float delta){
 		animation.update(delta);
+		hb.setPosition(body.getPosition().x*B2DVars.PPM, body.getPosition().y*B2DVars.PPM);
+		hb.setValue((health/maxHealth)*100);
 	}
 	
 	public void renderAnim(SpriteBatch sb){
@@ -59,9 +69,16 @@ public class GameObj {
 	public void setPosition(float x, float y){
 		body.setTransform(x, y, 0f);
 	}
+	public void setHealth(float h) {
+		health = h;
+	}
+	
 	public float getWidth(){ return width; }
 	
 	public float getHeight() { return height; }
+	
+	public float getHealth() { return health; }
+	
 	
 	
 	

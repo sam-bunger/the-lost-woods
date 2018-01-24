@@ -10,19 +10,17 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygame.game.B2D.B2DVars;
-import com.mygame.game.handlers.AttackManager;
+import com.mygame.game.handlers.InteractionManager;
 import com.mygame.game.main.TheLostWoods;
 
 
 public class Player extends GameObj {
 	
 	private Vector2 direction;
-	private AttackManager am;
+	private InteractionManager am;
 	private World world;
 	
 	// player attributes
-	private int health;
-	private int maxHealth;
 	private boolean dead;
 	private boolean flinching;
 	private long flinchTimer;
@@ -45,13 +43,17 @@ public class Player extends GameObj {
 	private OrthographicCamera cam;
 	
 	
-	public Player(Body body, OrthographicCamera cam, AttackManager am, World w){
+	public Player(Body body, OrthographicCamera cam, InteractionManager am, World w){
 
 		super(body);
 		
 		this.cam = cam;
 		this.am = am;
 		this.world = w;
+		
+		health = 100;
+		maxHealth = 100;
+		
 		
 		maxSpeed = 2.5f;
 		
@@ -110,7 +112,7 @@ public class Player extends GameObj {
 			}
 		}
 		if(Gdx.input.isKeyPressed(Keys.SPACE)){
-			am.newAttack(new Attack(10, 1, world, body.getPosition().x, body.getPosition().y, 100, 100));
+			am.newAttack(new Attack(1f, 1, world, body.getPosition().x, body.getPosition().y, 100, 100));
 		}
 		
 		if(direction.x == 0 && direction.y == 0){
