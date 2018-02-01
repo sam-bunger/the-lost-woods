@@ -80,8 +80,6 @@ public class DungeonState extends GameState {
 		dungeon.setRooms(cam.position.x, cam.position.y);
 		
 		rayHandler.setCombinedMatrix(cam.combined.cpy().scl(PPM));
-		
-		world.step(delta, 6, 2);
 	}
 
 	public void render() {

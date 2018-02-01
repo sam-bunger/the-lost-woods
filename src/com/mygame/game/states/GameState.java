@@ -67,6 +67,11 @@ public class GameState extends State {
 
 	@Override
 	public void update(float delta) {
+		
+		world.step(delta, 6, 2);
+		
+		im.update(delta);
+		
 		handleInput();
 		player.update(delta);
 		player.handleInput();

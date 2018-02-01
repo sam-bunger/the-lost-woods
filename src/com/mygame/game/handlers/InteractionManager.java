@@ -1,6 +1,7 @@
 package com.mygame.game.handlers;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -12,13 +13,14 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygame.game.B2D.B2DVars;
-import com.mygame.game.entities.Attack;
+import com.mygame.game.combat.Attack;
 import com.mygame.game.entities.GameObj;
 import com.mygame.game.entities.HealthBar;
 
 public class InteractionManager {
 	private Array<Body> bodies;
 	private ArrayList<Attack> attackQue;
+	private Iterator<Attack> attackIterate;
 	private World world;
 	
 	public InteractionManager(World world){
@@ -34,7 +36,15 @@ public class InteractionManager {
 	}
 	
 	public void deleteAttack(){
-		attackQue.remove(0);
+		attackIterate.remove();
+	}
+	
+	public void update(float delta){
+		attackIterate = attackQue.iterator();
+
+		while (attackIterate.hasNext()) {
+			attackIterate.next().update(delta);	
+		}
 	}
 	
 	public void createContactListener(World w){
@@ -50,12 +60,12 @@ public class InteractionManager {
                 if(fixtureA instanceof Attack) { 
             		if(fixtureB instanceof GameObj) {
             			((GameObj) fixtureB).setHealth(((GameObj) fixtureB).getHealth() - ((Attack) fixtureA).getDamage());
-            			System.out.println(fixtureB + " health is currently " + ((GameObj) fixtureB).getHealth());
+            			//System.out.println(fixtureB + " health is currently " + ((GameObj) fixtureB).getHealth());
             		}
                 }else if(fixtureB instanceof Attack) {
                 	if(fixtureA instanceof GameObj) {
                 		((GameObj) fixtureA).setHealth(((GameObj) fixtureA).getHealth() - ((Attack) fixtureB).getDamage());
-            			System.out.println(fixtureA + " health is currently " + ((GameObj) fixtureA).getHealth());
+            			//System.out.println(fixtureA + " health is currently " + ((GameObj) fixtureA).getHealth());
             		}
                 }
 

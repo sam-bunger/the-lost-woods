@@ -16,7 +16,6 @@ import com.mygame.game.main.TheLostWoods;
  * Animation
  * AI steeringpath or pathfinding
  * 
- *
  */
 public class GameObj {
 	
@@ -36,7 +35,7 @@ public class GameObj {
 	public GameObj(Body body){
 		this.body = body;
 		animation = new Animation();
-		hb = new HealthBar(100, 10);
+		hb = new HealthBar(100, 5);
 		hb.setRange(0, 100);
 		TheLostWoods.stage.addActor(hb);
 	}

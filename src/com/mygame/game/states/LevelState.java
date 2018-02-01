@@ -128,7 +128,6 @@ public class LevelState extends GameState {
 		
 		follower1.update(delta);
 		
-		world.step(delta, 6, 2);
 	}
 
 	public void render() {

@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygame.game.B2D.B2DVars;
+import com.mygame.game.combat.Attack;
+import com.mygame.game.combat.SwordAttack;
 import com.mygame.game.handlers.InteractionManager;
 import com.mygame.game.main.TheLostWoods;
 
@@ -54,6 +56,8 @@ public class Player extends GameObj {
 		health = 100;
 		maxHealth = 100;
 		
+		hb.setWidth(200);
+		hb.setPosition(10,Gdx.graphics.getHeight()-20);
 		
 		maxSpeed = 2.5f;
 		
@@ -112,7 +116,7 @@ public class Player extends GameObj {
 			}
 		}
 		if(Gdx.input.isKeyPressed(Keys.SPACE)){
-			am.newAttack(new Attack(1f, 1, world, body.getPosition().x, body.getPosition().y, 100, 100));
+			am.newAttack(new SwordAttack(body, 1f, 1, world, body.getPosition().x, body.getPosition().y, 40, 5, am));
 		}
 		
 		if(direction.x == 0 && direction.y == 0){
@@ -141,9 +145,10 @@ public class Player extends GameObj {
 	}
 	
 	public void update(float delta){
-		super.update(delta);
+		animation.update(delta);
 		vectorUpdate();
 		body.setLinearVelocity(direction);
+		hb.setValue((health/maxHealth)*100);
 	}
 	
 	public void vectorUpdate(){
