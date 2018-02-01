@@ -49,21 +49,41 @@ public class SwordAttack extends Attack{
 	        weaponDef.collideConnected = false;
 	        playerBody.setType(BodyType.StaticBody);
 	        
+	        weaponDef.lowerAngle = (float) -(Math.PI*0.25);
+        	weaponDef.upperAngle = (float) (Math.PI*0.25);
 	        
-	        if(angle>Math.PI*1.5){
+	        if(Math.toDegrees(angle)>337.5){//E
+	        	hitBox.setTransform(hitBox.getPosition().set(playerBody.getPosition().x +.4f, playerBody.getPosition().y - .4f), (float)(Math.PI*1.75));
+	        	weaponDef.referenceAngle = 0;
+	        	weaponDef.lowerAngle = (float) ((2*Math.PI)-(Math.PI*0.25));
+	        	weaponDef.upperAngle = (float) ((2*Math.PI)+(Math.PI*0.25));
+	        }else if(Math.toDegrees(angle)>292.5){//SE
 	        	hitBox.setTransform(hitBox.getPosition().set(playerBody.getPosition().x, playerBody.getPosition().y - .55f), (float)(Math.PI*1.5));
 	        	weaponDef.referenceAngle = (float) (Math.PI*1.75);
-	        }else if(angle>Math.PI){
+	        }else if(Math.toDegrees(angle)>247.5){//S
+	        	hitBox.setTransform(hitBox.getPosition().set(playerBody.getPosition().x -.4f, playerBody.getPosition().y - .4f), (float)(Math.PI*1.25));
+	        	weaponDef.referenceAngle = (float) (Math.PI*1.5);
+	        }else if(Math.toDegrees(angle)>202.5){//SW
 	        	hitBox.setTransform(hitBox.getPosition().set(playerBody.getPosition().x - .55f, playerBody.getPosition().y), (float)(Math.PI));
 	        	weaponDef.referenceAngle = (float) (Math.PI*1.25);
-	        }else if(angle>Math.PI*0.5){
+	        }else if(Math.toDegrees(angle)>157.5){//W
+	        	hitBox.setTransform(hitBox.getPosition().set(playerBody.getPosition().x -.4f, playerBody.getPosition().y + .4f), (float)(Math.PI*0.75));
+	        	weaponDef.referenceAngle = (float) (Math.PI);
+	        }else if(Math.toDegrees(angle)>112.5){//NW
 	        	hitBox.setTransform(hitBox.getPosition().set(playerBody.getPosition().x, playerBody.getPosition().y + .55f), (float)(Math.PI*0.5));
 	        	weaponDef.referenceAngle = (float) (Math.PI*0.75);
-	        }else{
+	        }else if(Math.toDegrees(angle)>67.5){//N
+	        	hitBox.setTransform(hitBox.getPosition().set(playerBody.getPosition().x +.4f, playerBody.getPosition().y + .4f), (float)(Math.PI*0.25));
+	        	weaponDef.referenceAngle = (float) (Math.PI*0.5);
+	        }else if(Math.toDegrees(angle)>22.5){//NE
 	        	weaponDef.referenceAngle = (float) (Math.PI*0.25);
+	        }else{//E
+	        	hitBox.setTransform(hitBox.getPosition().set(playerBody.getPosition().x +.4f, playerBody.getPosition().y - .4f), (float)(Math.PI*1.75));
+	        	weaponDef.referenceAngle = 0;
+	        	weaponDef.lowerAngle = (float) ((2*Math.PI)-(Math.PI*0.25));
+	        	weaponDef.upperAngle = (float) ((2*Math.PI)+(Math.PI*0.25));
 	        }
-
-	        
+   
 	        weaponDef.localAnchorA.set(this.playerBody.getLocalCenter());
 	        weaponDef.localAnchorB.set(this.hitBox.getLocalCenter().add(new Vector2(-0.55f, 0)));
 
@@ -72,10 +92,6 @@ public class SwordAttack extends Attack{
 	        weaponDef.maxMotorTorque = 20;
 
 	        weaponDef.enableLimit = true;
-	       
-	        weaponDef.lowerAngle = (float) -(Math.PI*0.25);
-        	weaponDef.upperAngle = (float) (Math.PI*0.25);
-	        
 	        
 	    weaponJoint = (RevoluteJoint)world.createJoint(weaponDef);
     }
