@@ -2,6 +2,9 @@ package com.mygame.game.states;
 
 import static com.mygame.game.B2D.B2DVars.PPM;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,13 +12,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygame.game.B2D.B2DShapeTools;
+import com.mygame.game.B2D.B2DVars;
+import com.mygame.game.entities.GameObj;
 import com.mygame.game.entities.Player;
 import com.mygame.game.handlers.InteractionManager;
+import com.mygame.game.handlers.Layer;
 import com.mygame.game.handlers.GameStateManager;
-import com.mygame.game.main.TheLostWoods;
 
 public class GameState extends State {	
 	protected World world;
@@ -24,6 +27,8 @@ public class GameState extends State {
 	
 	protected Player player;
 	protected Body playerBody;
+	
+	protected Layer layer;
 	
 	protected InteractionManager im;
 
@@ -36,10 +41,13 @@ public class GameState extends State {
 		
 		im = new InteractionManager(world);
 		
+		layer = new Layer();
+		
 		//Create player
 		playerBody = B2DShapeTools.createBox(world, 0, 0, 12, 12, false, true, false);
 		player = new Player(playerBody, cam, im, world);
 		playerBody.setUserData(player);
+		layer.add(player);
 		
 		
 	}
@@ -87,6 +95,12 @@ public class GameState extends State {
 	public void render() {
 		sb.setProjectionMatrix(cam.combined);
 		sr.setProjectionMatrix(cam.combined);
+		layer.sort();
+		sb.begin();
+		for(int i=0;i<layer.getEntities().size();i++){
+			sb.draw(layer.getEntities().get(i).getAnimation().getFrame(), layer.getEntities().get(i).getBody().getPosition().x * B2DVars.PPM - layer.getEntities().get(i).getWidth()/2, layer.getEntities().get(i).getBody().getPosition().y * B2DVars.PPM - layer.getEntities().get(i).getHeight()/2);
+		}
+		sb.end();
 		
 	}
 

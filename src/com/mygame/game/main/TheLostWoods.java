@@ -38,7 +38,8 @@ public class TheLostWoods extends ApplicationAdapter {
 	private OrthographicCamera hudCam;
 	
 	private static UserInterface skt;
-	public static Stage stage;
+	public static Stage uiStage;
+	public static Stage gameStage;
 	
 	public static Content res;
 	
@@ -76,19 +77,23 @@ public class TheLostWoods extends ApplicationAdapter {
 		hudCam.setToOrtho(false, WIDTH, HEIGHT);
 		
 		viewport = new FitViewport(WIDTH, HEIGHT, cam);
-		//viewport = new FitViewport(16, 9, hudCam);
+		//viewport = new FitViewport(WIDTH, HEIGHT, hudCam);
 	    viewport.apply();
+	    
+	    gameStage = new Stage();
+	    gameStage.setViewport(viewport);
 
-		stage = new Stage();
+		uiStage = new Stage();
 		
 		gsm = new GameStateManager(this);
 		
-		skt = new UserInterface(stage, gsm);
+		skt = new UserInterface(uiStage, gsm);
 		skt.create();
 		
 		try {
 			//gsm.push(new DungeonState(gsm));
-			gsm.push(new MenuState(gsm));
+			//gsm.push(new MenuState(gsm));
+			gsm.push(new EndlessState(gsm));
 			//gsm.push(new LevelState(gsm));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -115,15 +120,19 @@ public class TheLostWoods extends ApplicationAdapter {
 			font.draw(sb, ""+Gdx.graphics.getFramesPerSecond(), 10, 20);
 			sb.end();
 			
-			stage.act();
-	        stage.draw();
+			gameStage.act();
+			gameStage.draw();
+			
+			uiStage.act();
+	        uiStage.draw();
 		}
 		
 	}
 	
 	public void dispose () {
 		res.disposeTexture("player");
-		stage.dispose();
+		uiStage.dispose();
+		gameStage.dispose();
 	}
 	
 	

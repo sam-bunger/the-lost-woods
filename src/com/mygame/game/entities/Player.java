@@ -1,6 +1,7 @@
 package com.mygame.game.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygame.game.B2D.B2DVars;
 import com.mygame.game.combat.Attack;
+import com.mygame.game.combat.ProjectileAttack;
 import com.mygame.game.combat.SwordAttack;
 import com.mygame.game.handlers.InteractionManager;
 import com.mygame.game.main.TheLostWoods;
@@ -26,6 +28,9 @@ public class Player extends GameObj {
 	private boolean dead;
 	private boolean flinching;
 	private long flinchTimer;
+	
+	private int attackDelay;
+	private int attackTime;
 	
 	//Movement//
 	private float maxSpeed;
@@ -55,6 +60,8 @@ public class Player extends GameObj {
 		
 		health = 100;
 		maxHealth = 100;
+		attackDelay = 50;
+		attackTime = 50;
 		
 		hb.setWidth(200);
 		hb.setPosition(10,Gdx.graphics.getHeight()-20);
@@ -115,8 +122,17 @@ public class Player extends GameObj {
 				animation.setDelay(0.1f);
 			}
 		}
-		if(Gdx.input.isKeyPressed(Keys.SPACE)){
-			am.newAttack(new SwordAttack(body, 1f, 1, world, body.getPosition().x, body.getPosition().y, 40, 5, am));
+		
+		//Combat
+		if(attackTime == attackDelay){
+			if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+				am.newAttack(new SwordAttack(body, 10f, 1, world, 40, 5, am));
+				attackTime = 0;
+			}
+			if(Gdx.input.isKeyPressed(Keys.SPACE)){
+				am.newAttack(new ProjectileAttack(body, 1f, 1, world, 40, 5, am));
+				attackTime = 0;
+			}
 		}
 		
 		if(direction.x == 0 && direction.y == 0){
@@ -146,9 +162,14 @@ public class Player extends GameObj {
 	
 	public void update(float delta){
 		animation.update(delta);
+		depth = body.getPosition().y*B2DVars.PPM;
 		vectorUpdate();
 		body.setLinearVelocity(direction);
 		hb.setValue((health/maxHealth)*100);
+		
+		if(attackTime != attackDelay){
+			attackTime++;
+		}
 	}
 	
 	public void vectorUpdate(){

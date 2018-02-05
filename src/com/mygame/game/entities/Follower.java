@@ -118,5 +118,8 @@ public class Follower extends GameObj{
 		}
 	}
 	
+	public void dispose(){
+		super.dispose();
+	}
 
 }

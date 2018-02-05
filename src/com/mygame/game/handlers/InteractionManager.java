@@ -21,12 +21,15 @@ public class InteractionManager {
 	private Array<Body> bodies;
 	private ArrayList<Attack> attackQue;
 	private Iterator<Attack> attackIterate;
+	private ArrayList<GameObj> deleteQue;
+	private Iterator<GameObj> deleteIterate;
 	private World world;
 	
 	public InteractionManager(World world){
 		this.world = world;
 		bodies = new Array<Body>();
 		attackQue = new ArrayList<Attack>();
+		deleteQue = new ArrayList<GameObj>();
 		world.getBodies(bodies);
 		createContactListener(world);
 	}
@@ -41,9 +44,15 @@ public class InteractionManager {
 	
 	public void update(float delta){
 		attackIterate = attackQue.iterator();
-
+		deleteIterate = deleteQue.iterator();
+		
 		while (attackIterate.hasNext()) {
 			attackIterate.next().update(delta);	
+		}
+		
+		while (deleteIterate.hasNext()) {
+			world.destroyBody(deleteIterate.next().getBody());
+			deleteIterate.remove();
 		}
 	}
 	
@@ -60,11 +69,17 @@ public class InteractionManager {
                 if(fixtureA instanceof Attack) { 
             		if(fixtureB instanceof GameObj) {
             			((GameObj) fixtureB).setHealth(((GameObj) fixtureB).getHealth() - ((Attack) fixtureA).getDamage());
+            			if(((GameObj) fixtureB).getHealth()<=0){
+            				deleteQue.add((GameObj) fixtureB);
+            			}
             			//System.out.println(fixtureB + " health is currently " + ((GameObj) fixtureB).getHealth());
             		}
                 }else if(fixtureB instanceof Attack) {
                 	if(fixtureA instanceof GameObj) {
                 		((GameObj) fixtureA).setHealth(((GameObj) fixtureA).getHealth() - ((Attack) fixtureB).getDamage());
+                		if(((GameObj) fixtureA).getHealth()<=0){
+                			deleteQue.add((GameObj) fixtureA);
+            			}
             			//System.out.println(fixtureA + " health is currently " + ((GameObj) fixtureA).getHealth());
             		}
                 }

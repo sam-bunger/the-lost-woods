@@ -20,6 +20,7 @@ import com.mygame.game.main.TheLostWoods;
 public class GameObj {
 	
 	//B2D Body
+	protected float depth;
 	protected Body body;
 	
 	protected float health;
@@ -34,10 +35,11 @@ public class GameObj {
 	
 	public GameObj(Body body){
 		this.body = body;
+		depth = body.getPosition().y*B2DVars.PPM;
 		animation = new Animation();
 		hb = new HealthBar(100, 5);
 		hb.setRange(0, 100);
-		TheLostWoods.stage.addActor(hb);
+		TheLostWoods.gameStage.addActor(hb);
 	}
 	
 	public void setAnimation(TextureRegion[][] reg, float delay){
@@ -48,14 +50,19 @@ public class GameObj {
 	
 	public void update(float delta){
 		animation.update(delta);
-		hb.setPosition(body.getPosition().x*B2DVars.PPM, body.getPosition().y*B2DVars.PPM);
+		depth = body.getPosition().y*B2DVars.PPM;
+		hb.setPosition(body.getPosition().x*B2DVars.PPM - hb.getWidth()/2, body.getPosition().y*B2DVars.PPM + 35);
 		hb.setValue((health/maxHealth)*100);
 	}
 	
 	public void renderAnim(SpriteBatch sb){
-		sb.begin();
-		sb.draw(animation.getFrame(), body.getPosition().x * B2DVars.PPM - width/2, body.getPosition().y * B2DVars.PPM - height/2);
-		sb.end();
+		//sb.begin();
+		//sb.draw(animation.getFrame(), body.getPosition().x * B2DVars.PPM - width/2, body.getPosition().y * B2DVars.PPM - height/2);
+		//sb.end();
+	}
+	
+	public void dispose(){
+		hb.remove();
 	}
 	
 	public Body getBody(){ return body; }
@@ -77,6 +84,10 @@ public class GameObj {
 	public float getHeight() { return height; }
 	
 	public float getHealth() { return health; }
+	
+	public float getDepth(){ return depth; }
+	
+	public Animation getAnimation(){ return animation; }
 	
 	
 	

@@ -23,7 +23,7 @@ public class SwordAttack extends Attack{
 	private World world;
 	private InteractionManager im;
 
-	public SwordAttack(Body playerBody, float damage, float attackTime, World world, float x, float y, float w, float h, InteractionManager im) {
+	public SwordAttack(Body playerBody, float damage, float attackTime, World world, float w, float h, InteractionManager im) {
 		super(damage, attackTime, world, playerBody.getPosition().x*B2DVars.PPM +(.55f*B2DVars.PPM), playerBody.getPosition().y*B2DVars.PPM, w, h);
 		this.world = world;
 		this.playerBody = playerBody;
