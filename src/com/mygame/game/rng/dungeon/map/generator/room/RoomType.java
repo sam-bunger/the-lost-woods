@@ -1,7 +1,7 @@
-package com.mygame.game.dungeon.map.generator.room;
+package com.mygame.game.rng.dungeon.map.generator.room;
 
-import com.mygame.game.dungeon.map.Grid;
-import com.mygame.game.dungeon.map.generator.room.AbstractRoomGenerator.Room;
+import com.mygame.game.rng.dungeon.map.Grid;
+import com.mygame.game.rng.dungeon.map.generator.room.AbstractRoomGenerator.Room;
 
 /** Represents a single room type. Determines how the room is carved in the map.
  * <p>

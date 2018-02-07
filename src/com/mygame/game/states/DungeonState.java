@@ -20,7 +20,7 @@ import com.mygame.game.B2D.B2DShapeTools;
 import com.mygame.game.UI.UserInterface;
 import com.mygame.game.handlers.GameStateManager;
 import com.mygame.game.main.TheLostWoods;
-import com.mygame.game.dungeon.Dungeon;
+import com.mygame.game.rng.dungeon.Dungeon;
 import com.mygame.game.entities.Player;
 
 import box2dLight.PointLight;

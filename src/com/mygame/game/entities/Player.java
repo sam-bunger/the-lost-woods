@@ -32,6 +32,9 @@ public class Player extends GameObj {
 	private int attackDelay;
 	private int attackTime;
 	
+	private int currentAction;
+	private int previousAction;
+	
 	//Movement//
 	private float maxSpeed;
 	

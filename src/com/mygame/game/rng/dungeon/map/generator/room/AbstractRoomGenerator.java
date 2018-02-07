@@ -1,13 +1,13 @@
-package com.mygame.game.dungeon.map.generator.room;
+package com.mygame.game.rng.dungeon.map.generator.room;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.mygame.game.dungeon.array.Int2dArray;
-import com.mygame.game.dungeon.map.Grid;
-import com.mygame.game.dungeon.map.generator.AbstractGenerator;
-import com.mygame.game.dungeon.map.generator.Generators;
+import com.mygame.game.rng.dungeon.array.Int2dArray;
+import com.mygame.game.rng.dungeon.map.Grid;
+import com.mygame.game.rng.dungeon.map.generator.AbstractGenerator;
+import com.mygame.game.rng.dungeon.map.generator.Generators;
 
 /** Abstract base for room-generating algorithms.
  *

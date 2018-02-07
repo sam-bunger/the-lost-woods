@@ -1,39 +1,16 @@
 package com.mygame.game.states;
 
-import static com.mygame.game.B2D.B2DVars.BIT_PLAYER;
-import static com.mygame.game.B2D.B2DVars.BIT_TELEPORTER;
-import static com.mygame.game.B2D.B2DVars.BIT_WALL;
-import static com.mygame.game.B2D.B2DVars.PPM;
-
 import java.io.IOException;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.ai.steer.behaviors.Arrive;
-import com.badlogic.gdx.ai.steer.behaviors.LookWhereYouAreGoing;
-import com.badlogic.gdx.ai.steer.behaviors.Wander;
-import com.badlogic.gdx.ai.utils.Location;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
-import com.mygame.game.entities.Player;
+import com.mygame.game.B2D.B2DShapeTools;
+import com.mygame.game.B2D.B2DSteeringEntity;
+import com.mygame.game.UI.UserInterface;
+import com.mygame.game.UI.skins.elements.gameui.GameUIOrg;
 import com.mygame.game.entities.DayNightCycle;
 import com.mygame.game.entities.Follower;
-import com.mygame.game.entities.InteractObj;
-import com.mygame.game.entities.Teleporter;
-import com.mygame.game.entities.TreasureChest;
 import com.mygame.game.entities.Tree;
 import com.mygame.game.handlers.GameStateManager;
 import com.mygame.game.main.TheLostWoods;
@@ -43,21 +20,13 @@ import com.mygame.game.rng.RNTree;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 
-import com.mygame.game.B2D.B2DShapeTools;
-import com.mygame.game.B2D.B2DSteeringEntity;
-import com.mygame.game.B2D.B2DLight.LightData;
-import com.mygame.game.UI.UserInterface;
-import com.mygame.game.UI.skins.elements.gameui.GameUIOrg;
-
 public class LevelState extends GameState {
 	
 	private RNTree forest1;
 	private Pathway pathNorth;
-	private Teleporter tele;
 	
 	private Tree tree;
 	private UserInterface ui;
-	private TreasureChest chest;
 	private DayNightCycle sun;
 	
 	private RayHandler rayHandler;

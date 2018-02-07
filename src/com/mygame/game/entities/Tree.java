@@ -25,7 +25,7 @@ public class Tree extends GameObj {
 		
 		setAnimation(leafSprite, 0.1f);
 		animation.setNumFrames(numFrames);
-		animation.setAnimation(currentAction);
+		animation.setAnimation(0);
 	}
 	public void print(){System.out.println(body.getPosition().x+" "+body.getPosition().y);}
 	public Texture getTrunkImg(){return trunkSprite;}

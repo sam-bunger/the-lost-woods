@@ -1,4 +1,4 @@
-package com.mygame.game.dungeon;
+package com.mygame.game.rng.dungeon;
 
 
 import java.util.Random;
@@ -11,8 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygame.game.B2D.B2DShapeTools;
-import com.mygame.game.dungeon.map.Grid;
-import com.mygame.game.dungeon.map.generator.room.DungeonGenerator;
+import com.mygame.game.rng.dungeon.map.Grid;
+import com.mygame.game.rng.dungeon.map.generator.room.DungeonGenerator;
 
 public class Dungeon {
     private TextureAtlas tiles;

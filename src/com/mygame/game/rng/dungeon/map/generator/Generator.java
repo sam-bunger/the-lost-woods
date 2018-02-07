@@ -1,6 +1,6 @@
-package com.mygame.game.dungeon.map.generator;
+package com.mygame.game.rng.dungeon.map.generator;
 
-import com.mygame.game.dungeon.map.Grid;
+import com.mygame.game.rng.dungeon.map.Grid;
 
 /** Common interface for all map generators.
  *

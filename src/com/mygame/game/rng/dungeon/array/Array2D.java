@@ -1,4 +1,4 @@
-package com.mygame.game.dungeon.array;
+package com.mygame.game.rng.dungeon.array;
 
 /** Base class for containers that wrap around a single 1D array, treating it as a 2D array.
  *

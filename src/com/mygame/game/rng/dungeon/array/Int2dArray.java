@@ -1,4 +1,4 @@
-package com.mygame.game.dungeon.array;
+package com.mygame.game.rng.dungeon.array;
 
 /** A simple {@link Array2D} extension storing a 1D primitive int array, treating it as a 2D array.
  *

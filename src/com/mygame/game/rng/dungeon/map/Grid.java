@@ -1,8 +1,8 @@
-package com.mygame.game.dungeon.map;
+package com.mygame.game.rng.dungeon.map;
 
 import java.util.Arrays;
 
-import com.mygame.game.dungeon.array.Array2D;
+import com.mygame.game.rng.dungeon.array.Array2D;
 
 /** A float array wrapper. Allows to use a single 1D float array as a 2D array.
  *

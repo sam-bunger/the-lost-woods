@@ -30,14 +30,12 @@ public class GameObj {
 	protected Animation animation;
 	protected float width;
 	protected float height;
-	protected int currentAction;
-	protected int previousAction;
 	
 	public GameObj(Body body){
 		this.body = body;
 		depth = body.getPosition().y*B2DVars.PPM;
 		animation = new Animation();
-		hb = new HealthBar(100, 5);
+		hb = new HealthBar(20, 1);
 		hb.setRange(0, 100);
 		TheLostWoods.gameStage.addActor(hb);
 	}
@@ -51,7 +49,7 @@ public class GameObj {
 	public void update(float delta){
 		animation.update(delta);
 		depth = body.getPosition().y*B2DVars.PPM;
-		hb.setPosition(body.getPosition().x*B2DVars.PPM - hb.getWidth()/2, body.getPosition().y*B2DVars.PPM + 35);
+		hb.setPosition(body.getPosition().x*B2DVars.PPM - hb.getWidth()/2, body.getPosition().y*B2DVars.PPM + 20);
 		hb.setValue((health/maxHealth)*100);
 	}
 	

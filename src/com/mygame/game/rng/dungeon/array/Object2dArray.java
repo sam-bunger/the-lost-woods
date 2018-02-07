@@ -1,4 +1,4 @@
-package com.mygame.game.dungeon.array;
+package com.mygame.game.rng.dungeon.array;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

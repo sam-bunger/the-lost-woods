@@ -7,12 +7,13 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.mygame.game.B2D.B2DShapeTools;
 import com.mygame.game.B2D.B2DSteeringEntity;
 import com.mygame.game.UI.UserInterface;
-import com.mygame.game.entities.Follower;
+import com.mygame.game.entities.enemies.Enemy;
+import com.mygame.game.entities.enemies.Slime;
 import com.mygame.game.handlers.GameStateManager;
 import com.mygame.game.main.TheLostWoods;
 
 public class EndlessState extends GameState{
-	private ArrayList<Follower> enemies;
+	private ArrayList<Enemy> enemies;
 	private UserInterface ui;
 	
 	private int round = 1;
@@ -21,7 +22,6 @@ public class EndlessState extends GameState{
 	private int spawnDelay;
 	private int time;
 	private B2DSteeringEntity target;
-	private MathUtils mu;
 
 	public EndlessState(GameStateManager gsm) {
 		super(gsm);
@@ -39,8 +39,7 @@ public class EndlessState extends GameState{
 		remainingEnemies = (int) Math.pow(round,difficulty)+3;
 		spawnDelay = 100/difficulty;
 		time = 0;
-		mu = new MathUtils();
-		enemies = new ArrayList<Follower>();
+		enemies = new ArrayList<Enemy>();
 		
 	}
 	
@@ -59,11 +58,20 @@ public class EndlessState extends GameState{
 		}
 		
 		if(time == spawnDelay){
-			Body body1 = B2DShapeTools.createCircle(world,mu.random(-250,250),mu.random(-150,150),10,false,false,false);
-			Follower enemy = new Follower(body1, "player", new B2DSteeringEntity(body1, .1f, target));
-			enemies.add(enemy);
-			body1.setUserData(enemy);
-			layer.add(enemy);
+			int a = MathUtils.random(0,1);
+			if(a==0){
+				Body body1 = B2DShapeTools.createCircle(world,MathUtils.random(-250,250),MathUtils.random(-150,150),8,false,false,false);
+				Slime enemy = new Slime(20, body1, "blueSlime", new B2DSteeringEntity(body1, .1f, target));
+				enemies.add(enemy);
+				body1.setUserData(enemy);
+				layer.add(enemy);
+			}else{
+				Body body1 = B2DShapeTools.createCircle(world,MathUtils.random(-250,250),MathUtils.random(-150,150),5,false,false,false);
+				Slime enemy = new Slime(10, body1, "smallBlueSlime", new B2DSteeringEntity(body1, .1f, target));
+				enemies.add(enemy);
+				body1.setUserData(enemy);
+				layer.add(enemy);
+			}
 			time=0;
 		}else{
 			time++;
@@ -85,9 +93,23 @@ public class EndlessState extends GameState{
 	
 	
 	public void render() {
-		super.render();
 		
-		//player.renderAnim(sb);
+		
+		//Grass
+		int currCol = (int) ((cam.position.x + (TheLostWoods.WIDTH))/TheLostWoods.WIDTH) - 1;
+		int currRow = (int) ((cam.position.y + (TheLostWoods.HEIGHT))/TheLostWoods.HEIGHT) - 1;
+		
+		for(int row = (currRow - 2); row <= (currRow + 1); row++) {
+			
+			for(int col = (currCol - 2); col <= (currCol + 1); col++) {
+				
+				sb.begin();
+				sb.draw(TheLostWoods.res.getTexture("grass"), col * TheLostWoods.WIDTH, row * TheLostWoods.HEIGHT);
+				sb.end();
+			}
+		}
+		
+		super.render();
 		
 		sb.begin();
 		TheLostWoods.font.draw(sb, "Round: " + round, 100, 100);
@@ -95,7 +117,8 @@ public class EndlessState extends GameState{
 		sb.end();
 		
 		//Render Box2D Camera
-		b2dr.render(world, b2dCam.combined);
+		//b2dr.render(world, b2dCam.combined);
+		
 		
 		
 	}

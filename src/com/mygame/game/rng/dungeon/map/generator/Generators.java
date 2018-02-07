@@ -1,4 +1,4 @@
-package com.mygame.game.dungeon.map.generator.room;
+package com.mygame.game.rng.dungeon.map.generator;
 
 import java.math.BigInteger;
 import java.util.List;
