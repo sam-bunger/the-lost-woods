@@ -41,7 +41,11 @@ public class Animation {
 	}
 	
 	public void setAnimation(int animation){
-		currentAnimation = animation;
+		if(currentAnimation != animation){
+			timesPlayed=0;
+			currentAnimation = animation;
+		}
+		
 	}
 	
 	public void update(float delta){

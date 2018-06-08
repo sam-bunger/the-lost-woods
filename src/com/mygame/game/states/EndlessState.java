@@ -17,8 +17,8 @@ public class EndlessState extends GameState{
 	private UserInterface ui;
 	
 	private int round = 1;
-	private int difficulty = 3; //1 - easy, 2 - normal, 3 - hard
-	private int remainingEnemies;
+	private int difficulty = 10; //1 - easy, 2 - normal, 3 - hard
+	public static int remainingEnemies;
 	private int spawnDelay;
 	private int time;
 	private B2DSteeringEntity target;
@@ -49,29 +49,19 @@ public class EndlessState extends GameState{
 		
 		for(int i=0;i<enemies.size();i++){
 			enemies.get(i).update(delta);
-			if(enemies.get(i).getHealth()<=0){
-				enemies.get(i).dispose();
-				layer.remove(enemies.get(i));
-				enemies.remove(i);
-				remainingEnemies--;
-			}
 		}
 		
 		if(time == spawnDelay){
+			/*
 			int a = MathUtils.random(0,1);
 			if(a==0){
-				Body body1 = B2DShapeTools.createCircle(world,MathUtils.random(-250,250),MathUtils.random(-150,150),8,false,false,false);
 				Slime enemy = new Slime(20, body1, "blueSlime", new B2DSteeringEntity(body1, .1f, target));
 				enemies.add(enemy);
-				body1.setUserData(enemy);
-				layer.add(enemy);
 			}else{
-				Body body1 = B2DShapeTools.createCircle(world,MathUtils.random(-250,250),MathUtils.random(-150,150),5,false,false,false);
-				Slime enemy = new Slime(10, body1, "smallBlueSlime", new B2DSteeringEntity(body1, .1f, target));
+			*/
+				Slime enemy = new Slime(10, "smallBlueSlime", new B2DSteeringEntity(world, .1f, target), layer);
 				enemies.add(enemy);
-				body1.setUserData(enemy);
-				layer.add(enemy);
-			}
+			//}
 			time=0;
 		}else{
 			time++;
@@ -79,11 +69,10 @@ public class EndlessState extends GameState{
 		
 		if(remainingEnemies<=0){
 			for(int i=0;i<enemies.size();i++){
-				enemies.get(i).setHealth(0);
-				enemies.get(i).dispose();
-				layer.remove(enemies.get(i));
+				enemies.get(0).setHealth(0);
+				enemies.get(0).update(delta);
+				enemies.remove(0);
 			}
-			enemies.removeAll(enemies);
 			remainingEnemies= (int) Math.pow(round,difficulty)+3;
 			round++;
 		}
@@ -117,7 +106,7 @@ public class EndlessState extends GameState{
 		sb.end();
 		
 		//Render Box2D Camera
-		//b2dr.render(world, b2dCam.combined);
+		b2dr.render(world, b2dCam.combined);
 		
 		
 		

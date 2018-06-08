@@ -4,15 +4,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.mygame.game.B2D.B2DSteeringEntity;
+import com.mygame.game.handlers.Layer;
 import com.mygame.game.main.TheLostWoods;
 
 public class Slime extends Enemy{
 	
-	private final int[] numFrames = { 8, 4, 4, 4, 4, 15};
+	private final int[] numFrames = { 8, 4, 4, 4, 4, 15,15};
 	
-	public Slime(int health, Body body, String animName, B2DSteeringEntity entity) {
-		super(body, entity);
+	public Slime(int health, String animName, B2DSteeringEntity entity, Layer layer) {
+		super(entity.getBody(), entity, layer);
 		
+		this.body.setUserData(this);
 		this.health = health;
 		maxHealth = health;
 		
@@ -37,50 +39,67 @@ public class Slime extends Enemy{
 	public void update(float delta){
 		super.update(delta);
 		
-		int angle = (int) Math.toDegrees(entity.getOrientation()) % 360;
-		if(angle<0){
-			angle = 360+angle;
-		}
-		
-		if(entity.getAnyAccelerations()){
-			animation.setDelay(0.3f);
-			if(angle<45 + umod){
-				//Up
-				umod=buffer;
-				animation.setAnimation(3);
-			}else if(angle<135 + dmod){
-				//Right
-				umod=-buffer;
-				dmod=buffer;
-				animation.setAnimation(2);
-			}else if(angle<225 + umod){
-				//Down
-				umod=buffer;
-				dmod=-buffer;
-				animation.setAnimation(4);
-			} else if(angle<315 + dmod){
-				//Left
-				umod=-buffer;
-				dmod=buffer;
-				animation.setAnimation(1);
-			}else{
-				//Up
-				dmod = -15;
-				animation.setAnimation(3);
+		if(health>0){
+			int angle = (int) Math.toDegrees(entity.getOrientation()) % 360;
+			if(angle<0){
+				angle = 360+angle;
 			}
-		} else {
+		
+			if(entity.getAnyAccelerations()){
+				animation.setDelay(0.3f);
+				if(angle<45 + umod){
+					//Up
+					umod=buffer;
+					animation.setAnimation(3);
+				}else if(angle<135 + dmod){
+					//Right
+					umod=-buffer;
+					dmod=buffer;
+					animation.setAnimation(2);
+				}else if(angle<225 + umod){
+					//Down
+					umod=buffer;
+					dmod=-buffer;
+					animation.setAnimation(4);
+				} else if(angle<315 + dmod){
+					//Left
+					umod=-buffer;
+					dmod=buffer;
+					animation.setAnimation(1);
+				}else{
+					//Up
+					dmod = -15;
+					animation.setAnimation(3);
+				}
+			} else {
+				animation.setDelay(0.1f);
+				animation.setAnimation(5);
+			}
+		
+		}else{
+			super.dispose();
 			animation.setDelay(0.1f);
-			animation.setAnimation(5);
+			animation.setAnimation(6);
+			if(animation.getTimesPlayed() >= 1){
+				super.death();
+			}
 		}
 	}
 	
 	public void attack(){
-		super.attack();
+		//Slime jumps towards target
+		
+		
 	}
 	
-	public void dispose(){
-		super.dispose();
+	public void retreat(){
+		//Slime runs from target
 	}
-
+	
+	public void merge(){
+		//Slime merges with another slime of same size
+		
+	}
+	
 }
 

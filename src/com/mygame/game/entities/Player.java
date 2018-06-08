@@ -129,7 +129,7 @@ public class Player extends GameObj {
 		//Combat
 		if(attackTime == attackDelay){
 			if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-				am.newAttack(new SwordAttack(body, 10f, 1, world, 40, 5, am));
+				am.newAttack(new SwordAttack(body, 5f, 1, world, 40, 5, am));
 				attackTime = 0;
 			}
 			if(Gdx.input.isKeyPressed(Keys.SPACE)){

@@ -53,12 +53,8 @@ public class LevelState extends GameState {
 		
 		//sun = new DayNightCycle(world, cam, playerBody, 600, 1800, 0.5);
 		
-		
-		Body body1 = B2DShapeTools.createCircle(world,100,100,10,false,false,false);
-		entity1 = new B2DSteeringEntity(body1, .1f, target);
-		
-		follower1 =  new Follower(body1, "player", entity1);
-		body1.setUserData(follower1);
+	
+		entity1 = new B2DSteeringEntity(world, .1f, target);
 		
 		//BODY Types
 		/*

@@ -57,7 +57,7 @@ public class TheLostWoods extends ApplicationAdapter {
 		res = new Content();
 		res.loadTexture("Sprites/playerSpriteSheetV1.png", "player");
 		res.loadTexture("Sprites/blueSlime.png", "blueSlime");
-		res.loadTexture("Sprites/smallBlueSlime.png", "smallBlueSlime");
+		res.loadTexture("Sprites/smallBlueSlimeV2.png", "smallBlueSlime");
 		
 		//tree b
 		res.loadTexture("Sprites/treeTrunkTest.png", "treeTrunk");

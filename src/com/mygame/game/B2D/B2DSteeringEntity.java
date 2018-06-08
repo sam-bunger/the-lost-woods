@@ -8,8 +8,10 @@ import com.badlogic.gdx.ai.steer.behaviors.Face;
 import com.badlogic.gdx.ai.steer.behaviors.LookWhereYouAreGoing;
 import com.badlogic.gdx.ai.steer.behaviors.ReachOrientation;
 import com.badlogic.gdx.ai.utils.Location;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 
 public class B2DSteeringEntity implements Steerable<Vector2>{
 	
@@ -27,6 +29,8 @@ public class B2DSteeringEntity implements Steerable<Vector2>{
 	private Face face;
 	private B2DSteeringEntity target;
 	
+	private Arrive<Vector2> arrive;
+	
 	
 	//Target
 	public B2DSteeringEntity(Body body){
@@ -41,8 +45,8 @@ public class B2DSteeringEntity implements Steerable<Vector2>{
 	
 	//AI Entity
 	//Make this more customizable
-	public B2DSteeringEntity(Body body, float boundingRadius, B2DSteeringEntity target){
-		this.body = body;
+	public B2DSteeringEntity(World world, float boundingRadius, B2DSteeringEntity target){
+		this.body = B2DShapeTools.createCircle(world,MathUtils.random(-250,250),MathUtils.random(-150,150),5,false,false,false);
 		this.boundingRadius = boundingRadius;
 		this.target = target;
 		
@@ -56,16 +60,23 @@ public class B2DSteeringEntity implements Steerable<Vector2>{
 		this.steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
 		this.body.setUserData(this);
 		
-		Arrive<Vector2> arrive = new Arrive<Vector2>(this, target)
+		arrive = new Arrive<Vector2>(this, target)
 				.setTimeToTarget(0.1f)
 				.setArrivalTolerance(.5f)
 				.setDecelerationRadius(80);
 		this.setBehavior(arrive);
 		
+		
 		face = new Face(this);
 		face.setTarget(target);
 				
 	}
+	
+	public void attack(){
+		
+	}
+	
+	
 	
 	@Override
 	public Vector2 angleToVector(Vector2 arg0, float arg1) {

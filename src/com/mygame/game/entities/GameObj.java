@@ -36,8 +36,10 @@ public class GameObj {
 		depth = body.getPosition().y*B2DVars.PPM;
 		animation = new Animation();
 		hb = new HealthBar(20, 1);
+		hb.setPosition(body.getPosition().x*B2DVars.PPM - hb.getWidth()/2, body.getPosition().y*B2DVars.PPM + 20);
 		hb.setRange(0, 100);
 		TheLostWoods.gameStage.addActor(hb);
+		hb.setVisible(false);
 	}
 	
 	public void setAnimation(TextureRegion[][] reg, float delay){
@@ -49,8 +51,11 @@ public class GameObj {
 	public void update(float delta){
 		animation.update(delta);
 		depth = body.getPosition().y*B2DVars.PPM;
-		hb.setPosition(body.getPosition().x*B2DVars.PPM - hb.getWidth()/2, body.getPosition().y*B2DVars.PPM + 20);
-		hb.setValue((health/maxHealth)*100);
+		if(health<maxHealth){
+			hb.setVisible(true);
+			hb.setPosition(body.getPosition().x*B2DVars.PPM - hb.getWidth()/2, body.getPosition().y*B2DVars.PPM + 20);
+			hb.setValue((health/maxHealth)*100);
+		}
 	}
 	
 	public void renderAnim(SpriteBatch sb){
