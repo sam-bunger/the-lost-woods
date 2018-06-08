@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.mygame.game.B2D.B2DVars;
 import com.mygame.game.main.TheLostWoods;
+import com.mygame.game.states.GameState;
 
 
 public class Player extends GameObj {

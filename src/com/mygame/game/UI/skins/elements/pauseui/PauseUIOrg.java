@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.mygame.game.UI.skins.elements.menuui.OptionsMenu;
 import com.mygame.game.UI.skins.tools.SkinContainer;
@@ -20,15 +21,17 @@ public class PauseUIOrg {
 	
 	private GameStateManager gsm;
 	private SkinContainer skinContainer;
+	private Stage stage;
 
-	public PauseUIOrg(SkinContainer skinContainer, GameStateManager gsm) throws IOException {
+	public PauseUIOrg(SkinContainer skinContainer, GameStateManager gsm, Stage stage) throws IOException {
 		this.skinContainer = skinContainer;
 		this.gsm = gsm;
+		this.stage = stage;
 		initiate();
 	}
 
 	public void initiate() throws IOException {
-		pauseMenu = new PauseMenu(skinContainer.skin, gsm);
+		pauseMenu = new PauseMenu(skinContainer.skin, gsm, stage);
 		pauseMenu.setPosition((Gdx.graphics.getWidth()/2)-(optionsMenu.getWidth()/2), (Gdx.graphics.getHeight()/2)-(optionsMenu.getHeight()/2));
         pauseMenu.setVisible(true);
         pmenui.add(pauseMenu);

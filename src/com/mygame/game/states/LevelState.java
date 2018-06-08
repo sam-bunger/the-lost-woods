@@ -28,6 +28,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygame.game.entities.Player;
 import com.mygame.game.entities.DayNightCycle;
 import com.mygame.game.entities.Follower;
@@ -67,8 +68,10 @@ public class LevelState extends GameState {
 	private B2DSteeringEntity entity1;
 	private Follower follower1;
 	
-	public LevelState(GameStateManager gsm) throws IOException {
-		super(gsm);
+	private RNTree forest;
+	
+	public LevelState(GameStateManager gsm, Stage stage) throws IOException {
+		super(gsm, stage);
 		
 		ui = TheLostWoods.getUI();
 		ui.changeToGame();
@@ -81,12 +84,8 @@ public class LevelState extends GameState {
 		createTeleporter();
 		
 		createChest(200,200);
-	
-		//createCollisionListener();
 		
-		//forest1 = new RNTree(world);
-		//forest1.genTreeSquare(100, new Vector2(0,0), new Vector2(1000, 1000));
-		
+		forest = new RNTree(world);
 		
 		sun = new DayNightCycle(world, cam, playerBody, 600, 1800, 0.5);
 		
@@ -95,6 +94,8 @@ public class LevelState extends GameState {
 		entity1 = new B2DSteeringEntity(body1, .1f, target);
 		
 		follower1 =  new Follower(body1, "player", entity1);
+		
+		
 		
 		//BODY Types
 		/*
@@ -111,7 +112,7 @@ public class LevelState extends GameState {
 		
 		if(Gdx.input.isKeyPressed(Keys.M)){
 			try {
-				gsm.push(new DungeonState(gsm));
+				gsm.push(new DungeonState(gsm, stage));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -123,33 +124,31 @@ public class LevelState extends GameState {
 	}
 
 	public void update(float delta) {
-		super.update(delta);
+		
 		handleInput();
 		
 		sun.update();
 		
 		pathNorth.update(delta);
+		
+		GameState.renderList.add(follower1);
+		
+		forest.update(delta, cam);
 	
 		sun.updateCam();
 		
 		follower1.update(delta);
 		
 		world.step(delta, 6, 2);
+		
+		super.update(delta);
 	}
 
 	public void render() {
+		
 		super.render();
+		
 		pathNorth.render(sb, sr);
-		
-		//forest1.renderTrunks(sb);
-		
-		follower1.renderAnim(sb);
-		
-		chest.renderAnim(sb);
-		
-		//forest1.render(sb);
-		
-		player.renderAnim(sb);
 
 		sun.render();
 		
@@ -160,10 +159,12 @@ public class LevelState extends GameState {
 		//Render Box2D Camera
 		b2dr.render(world, b2dCam.combined);
 		
+		super.renderObjs();
 		
 	}
 
 	public void dispose() {
+		System.out.println("disposed");
 		super.dispose();
 		sun.dispose();
 	}
@@ -176,9 +177,6 @@ public class LevelState extends GameState {
                 Fixture fixtureA = contact.getFixtureA();
                 Fixture fixtureB = contact.getFixtureB();
                 Gdx.app.log("beginContact", "between " + fixtureA.getUserData() + " and " + fixtureB.getUserData());
-                //if(fixtureB.getBody() instanceof InteractObj){
-                	
-                //}
             }
 
             @Override
@@ -201,7 +199,6 @@ public class LevelState extends GameState {
 	
 	public void createPlayer(){
 		playerBody = B2DShapeTools.createBox(world, 0, 0, 12, 12, false, true);
-		/*
 		BodyDef bdef = new BodyDef();
 		FixtureDef fdef = new FixtureDef();
 		PolygonShape shape = new PolygonShape();
@@ -216,7 +213,7 @@ public class LevelState extends GameState {
 		fdef.filter.categoryBits = BIT_PLAYER;
 		fdef.filter.maskBits = BIT_WALL;
 		playerBody.createFixture(fdef).setUserData(new LightData(1.0f));
-		*/
+		
 		//create player
 		try {
 			player = new Player(playerBody, cam);

@@ -15,11 +15,13 @@ public class DesktopLauncher {
 		//Settings.firstTimeSetUp();
 		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-
+		
 		config.vSyncEnabled = true;
-		config.width = TheLostWoods.WIDTH * TheLostWoods.SCALE;
-		config.height = TheLostWoods.HEIGHT * TheLostWoods.SCALE;
+		config.width = TheLostWoods.WIDTH;
+		config.height = TheLostWoods.HEIGHT;
 		config.title = TheLostWoods.TITLE;
+		
+		config.resizable = true;
 		
 		new LwjglApplication(new TheLostWoods(), config);
 	}

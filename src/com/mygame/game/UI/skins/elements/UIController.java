@@ -33,7 +33,7 @@ public class UIController extends Tab{
 
 	@Override
 	public void initiate() throws IOException {
-		menuUI = new MenuUIOrg(skinContainer, gsm);
+		menuUI = new MenuUIOrg(skinContainer, gsm, stage);
 		gameUI = new GameUIOrg(skinContainer, stage);
 		//pauseUI = new PauseUIOrg(skinContainer, gsm);
 		

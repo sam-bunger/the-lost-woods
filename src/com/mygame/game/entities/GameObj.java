@@ -20,8 +20,7 @@ import com.mygame.game.handlers.Animation;
 public class GameObj {
 	
 	//B2D Body
-	protected Body body;
-	
+	protected Body body;	
 	protected Animation animation;
 	protected float width;
 	protected float height;
@@ -45,7 +44,7 @@ public class GameObj {
 	
 	public void renderAnim(SpriteBatch sb){
 		sb.begin();
-		sb.draw(animation.getFrame(), body.getPosition().x * B2DVars.PPM - width/2, body.getPosition().y * B2DVars.PPM - height/2);
+		sb.draw(animation.getFrame(), body.getPosition().x*B2DVars.PPM - width/2, body.getPosition().y*B2DVars.PPM - height/2);
 		sb.end();
 	}
 	
@@ -56,12 +55,18 @@ public class GameObj {
 	public void setPosition(Vector2 v){
 		body.setTransform(v, 0f);
 	}
+	
 	public void setPosition(float x, float y){
 		body.setTransform(x, y, 0f);
 	}
+	
 	public float getWidth(){ return width; }
 	
 	public float getHeight() { return height; }
+	
+	public void dispose(){
+		
+	}
 	
 	
 	

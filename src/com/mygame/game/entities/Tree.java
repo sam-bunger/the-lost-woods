@@ -22,7 +22,6 @@ public class Tree extends GameObj {
 		trunkSprite = TheLostWoods.res.getTexture(trunk);
 		leafSprite = TextureRegion.split(TheLostWoods.res.getTexture(leaves), 133, 132);
 		
-		
 		setAnimation(leafSprite, 0.1f);
 		animation.setNumFrames(numFrames);
 		animation.setAnimation(currentAction);
@@ -30,9 +29,10 @@ public class Tree extends GameObj {
 	public void print(){System.out.println(body.getPosition().x+" "+body.getPosition().y);}
 	public Texture getTrunkImg(){return trunkSprite;}
 	
-	public void renderTrunk(SpriteBatch sb){
+	public void renderAnim(SpriteBatch sb){
 		sb.begin();
 		sb.draw(trunkSprite, body.getPosition().x * B2DVars.PPM - width/2, body.getPosition().y * B2DVars.PPM - height/2);
 		sb.end();
+		super.renderAnim(sb);
 	}
 }

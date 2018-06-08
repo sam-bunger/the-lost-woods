@@ -20,7 +20,6 @@ public class SkinManager extends Table {
     private Array<Tab> tabsArray;
     private List<Tab> tabs;
 
-
     private ScrollPane scroller;
 
     public SkinManager (SkinContainer skinContainer) {

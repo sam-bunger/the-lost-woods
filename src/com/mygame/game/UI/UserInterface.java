@@ -32,28 +32,27 @@ public class UserInterface extends ApplicationAdapter {
     	this.gsm = gsm;
     }
     
-    
     @Override
     public void create () {
         Gdx.app.setLogLevel(Application.LOG_INFO);
         
         Json json = new Json();
-            String skinjson = Gdx.files.internal(skinString + "/info.json").readString();
-            SkinMeta meta = json.fromJson(SkinMeta.class, skinjson);
-            Skin skin = new Skin(Gdx.files.internal(skinString + "/data/" + meta.filename));
-            skins.add(new SkinContainer(meta, skin));
+        String skinjson = Gdx.files.internal(skinString + "/info.json").readString();
+        SkinMeta meta = json.fromJson(SkinMeta.class, skinjson);
+        Skin skin = new Skin(Gdx.files.internal(skinString + "/data/" + meta.filename));
+        skins.add(new SkinContainer(meta, skin));
 
         Gdx.input.setInputProcessor(stage);
 
         SkinContainer initialSkin = skins.first();
 
         try {
+        	
         	uiController = new UIController(initialSkin, stage, gsm);
        
         	skinManager = new SkinManager(initialSkin);
         	skinManager.addTab(uiController);
 
-        	
 		} catch (IOException e) {
 			System.out.println("Failed to initalize gameStateUI");
 		}

@@ -3,6 +3,7 @@ package com.mygame.game.UI.skins.elements.pauseui;
 import java.io.IOException;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -16,7 +17,7 @@ import com.mygame.game.states.State;
 
 public class PauseMenu extends Window{
 
-		public PauseMenu(Skin skin, GameStateManager gsm) {
+		public PauseMenu(Skin skin, GameStateManager gsm, Stage stage) {
 			super("Pause Menu", skin);
 			
 			defaults().pad(10);
@@ -43,7 +44,7 @@ public class PauseMenu extends Window{
 		    quitGame.addListener( new ClickListener() {              
 		        @Override
 		        public void clicked(InputEvent event, float x, float y) {
-		        	gsm.push(new MenuState(gsm));
+		        	gsm.push(new MenuState(gsm, stage));
 		        };
 		    });
 		    

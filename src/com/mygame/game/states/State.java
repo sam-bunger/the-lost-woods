@@ -18,20 +18,21 @@ public abstract class State {
 	protected OrthographicCamera cam;
 	protected OrthographicCamera hudCam;
 	protected static boolean isPaused;
+	protected static Stage stage;
 	
 	protected int SCALE = TheLostWoods.SCALE;
 	protected int WIDTH = TheLostWoods.WIDTH;
 	protected int HEIGHT = TheLostWoods.HEIGHT;
 	
-	protected State(GameStateManager gsm){
+	protected State(GameStateManager gsm, Stage stage){
 		this.gsm = gsm;
+		this.stage = stage;
 		game = gsm.game();
 		sb = game.getSpriteBatch();
 		sr = game.getShapeRenderer();
 		cam = game.getCamera();
 		hudCam = game.getHUDCamera();
 		isPaused = false;
-		
 	}
 	
 	protected abstract void handleInput();

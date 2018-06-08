@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.mygame.game.B2D.B2DShapeTools;
 import com.mygame.game.UI.UserInterface;
@@ -35,9 +36,8 @@ public class DungeonState extends GameState {
 	private PointLight playerLight;
 	private Vector2 playerSpawn;
 
-	public DungeonState(GameStateManager gsm) throws IOException {
-		super(gsm);
-		
+	public DungeonState(GameStateManager gsm, Stage stage) throws IOException {
+		super(gsm, stage);
 		
 		dungeon = new Dungeon(world);
 		
@@ -60,7 +60,7 @@ public class DungeonState extends GameState {
 		
 		if(Gdx.input.isKeyPressed(Keys.M)){
 			try {
-				gsm.push(new LevelState(gsm));
+				gsm.push(new LevelState(gsm, stage));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

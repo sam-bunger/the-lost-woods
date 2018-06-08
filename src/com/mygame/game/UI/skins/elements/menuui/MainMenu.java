@@ -4,6 +4,7 @@ package com.mygame.game.UI.skins.elements.menuui;
 import java.io.IOException;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -16,7 +17,7 @@ import com.mygame.game.states.LevelState;
 
 public class MainMenu extends Window{
 
-	public MainMenu(Skin skin, GameStateManager gsm) {
+	public MainMenu(Skin skin, GameStateManager gsm, Stage stage) {
 		super("Main Menu", skin);
 		
 		defaults().pad(10);
@@ -26,7 +27,7 @@ public class MainMenu extends Window{
 	        @Override
 	        public void clicked(InputEvent event, float x, float y) {
 	        	try {
-					gsm.push(new LevelState(gsm));
+					gsm.push(new LevelState(gsm, stage));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

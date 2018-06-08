@@ -28,15 +28,17 @@ public class MenuUIOrg{
 	
 	private GameStateManager gsm;
 	private SkinContainer skinContainer;
+	private Stage stage;
 
-	public MenuUIOrg(SkinContainer skinContainer, GameStateManager gsm) throws IOException {
+	public MenuUIOrg(SkinContainer skinContainer, GameStateManager gsm, Stage stage) throws IOException {
 		this.skinContainer = skinContainer;
 		this.gsm = gsm;
+		this.stage = stage;
 		initiate();
 	}
 
 	public void initiate() throws IOException {
-		mainMenu = new MainMenu(skinContainer.skin, gsm);
+		mainMenu = new MainMenu(skinContainer.skin, gsm, stage);
 		mainMenu.setPosition((Gdx.graphics.getWidth()/2) - (mainMenu.getWidth()/2), (Gdx.graphics.getHeight()/2) - (mainMenu.getHeight()/2));
         mainMenu.setVisible(false);
         menui.add(mainMenu);

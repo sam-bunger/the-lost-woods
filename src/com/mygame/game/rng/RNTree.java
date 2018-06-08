@@ -7,6 +7,7 @@ import static com.mygame.game.B2D.B2DVars.PPM;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -17,15 +18,17 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.mygame.game.B2D.B2DLight.LightData;
 import com.mygame.game.entities.Tree;
+import com.mygame.game.states.GameState;
 
 public class RNTree {
+	
 	protected World world;
 	private ArrayList<Tree> forest;
-	
 	
 	public RNTree(World w) {
 		world = w;
 		forest = new ArrayList<Tree>();
+		createTree(10, 10);
 	}
 	
 	public void createTree(int x, int y){
@@ -75,17 +78,14 @@ public class RNTree {
 	
 	public ArrayList<Tree> getForest(){return forest;}
 	
-	public void render(SpriteBatch sb){
-		for(int i=0;i < forest.size();i++){
-			forest.get(i).renderAnim(sb);
-			//forest.get(i).print();
+	public void update(float delta, OrthographicCamera cam){
+		for(int i = 0; i < forest.size(); i++){
+			if(!(forest.get(i).getPosition().x < (cam.position.x - cam.viewportWidth/2) || forest.get(i).getPosition().x > (cam.position.x + cam.viewportWidth/2) || forest.get(i).getPosition().y < (cam.position.y - cam.viewportHeight/2) || forest.get(i).getPosition().y > (cam.position.y + cam.viewportHeight/2))){
+				GameState.renderList.add(forest.get(i));
+			}
 		}
 	}
 	
-	public void renderTrunks(SpriteBatch sb){
-		for(int i=0;i < forest.size();i++){
-			forest.get(i).renderTrunk(sb);
-		}
-	}
+	
 }
 

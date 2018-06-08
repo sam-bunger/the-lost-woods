@@ -8,9 +8,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygame.game.UI.UserInterface;
 import com.mygame.game.handlers.*;
@@ -44,10 +49,8 @@ public class TheLostWoods extends ApplicationAdapter {
 	
 	public static BitmapFont font;
 	
-	private Viewport viewport;
+	public Viewport viewport;
 	
-	@SuppressWarnings("static-access")
-	@Override
 	public void create () {
 		
 		font = new BitmapFont();
@@ -75,25 +78,20 @@ public class TheLostWoods extends ApplicationAdapter {
 		hudCam = new OrthographicCamera();
 		hudCam.setToOrtho(false, WIDTH, HEIGHT);
 		
-		viewport = new FitViewport(910, 540, cam);
-		//viewport = new FitViewport(1920,1080,hudCam);
-	    viewport.apply();
+		viewport = new FitViewport(WIDTH, HEIGHT, cam);
 
 		stage = new Stage();
-		
+
 		gsm = new GameStateManager(this);
 		
 		skt = new UserInterface(stage, gsm);
 		skt.create();
 		
 		try {
-			//gsm.push(new DungeonState(gsm));
-			gsm.push(new MenuState(gsm));
-			//gsm.push(new LevelState(gsm));
+			gsm.push(new MenuState(gsm, stage));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 
 	}
 
@@ -109,12 +107,12 @@ public class TheLostWoods extends ApplicationAdapter {
 			gsm.update(STEP);
 			gsm.render();
 			
-			sb.setProjectionMatrix(hudCam.combined);
 			
 			sb.begin();
-			font.draw(sb, ""+Gdx.graphics.getFramesPerSecond(), 10, 20);
+			font.draw(sb, "" + Gdx.graphics.getFramesPerSecond(), 10, 20);
 			sb.end();
 			
+			stage.getViewport().apply();
 			stage.act();
 	        stage.draw();
 		}
@@ -122,7 +120,6 @@ public class TheLostWoods extends ApplicationAdapter {
 	}
 	
 	public void dispose () {
-		res.disposeTexture("player");
 		stage.dispose();
 	}
 	
@@ -134,6 +131,13 @@ public class TheLostWoods extends ApplicationAdapter {
 
 	public static UserInterface getUI() {
 		return skt;
+	}
+	
+	public void resize(int width, int height){
+
+		//stage.getViewport().update((16*height)/9, height, false);
+	
+		System.out.println(cam.viewportWidth + ", " + cam.viewportHeight);
 	}
 	
 }
